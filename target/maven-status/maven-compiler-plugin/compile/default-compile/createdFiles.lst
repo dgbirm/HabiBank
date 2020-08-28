@@ -1,0 +1,5 @@
+com\habibank\model\Customer.class
+com\habibank\model\Transaction.class
+com\habibank\model\AccountType.class
+com\habibank\HabiBankApplication.class
+com\habibank\model\Account.class

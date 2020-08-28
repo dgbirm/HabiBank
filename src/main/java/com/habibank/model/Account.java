@@ -1,8 +1,11 @@
 /*
- * Copyright (c) 2020 as part of Bank, All rights reserved.
+ * Copyright (c) 2020 as part of HabiBank, All rights reserved.
+ * @author Chris Jabbour
+ * @author Matt Knudsvig
  * @author Dan Birmingham. Please reach out to dgbirm@gmail.com
- * Date generated: July 30, 2020
- * @version jdk-14
+ * @author Natasha...
+ * Date generated: Aug 28, 2020
+ * @version jdk-11
  */
 package com.habibank.model;
 
@@ -11,12 +14,20 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="account")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = -776361010511187135L;
 	
-	private final Integer acctID;
-	private Set<Integer> acctCustomerIDs;
+	private final @Id @GeneratedValue Integer acctID;
+	private @Transient Set<Integer> acctCustomerIDs;
 	private Double acctBalance=0.0;
 	private Enum<AccountType> acctType = AccountType.CHECKING;
 	
