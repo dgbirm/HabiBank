@@ -8,13 +8,16 @@ package com.habibank.model;
 
 import java.io.Serializable;
 
+//TODO: Set the table relationships
 /**
  * The class Customer: describes a Customer object 
  */
+@Entity
+@Table(name="customer")
 public class Customer implements Serializable {
 
 	private static final long serialVersionUID = 2639005257252900439L;
-	private final Integer customerID;
+	private final @Id @GeneratedValue  Integer customerID; //Add transient like the field in account?
 	private String customerName = "";
 	private String address= "";
 	private String city = "";

@@ -13,15 +13,17 @@ import java.time.LocalDateTime;
  * The Class Transaction.
  */
 public class Transaction {
-	private final Integer transactionID;
+	private final @Id @GeneratedValue Integer transactionID;
+	//private Double initialBalance
+	//private Double finalBalance
 	private Double ammountTransfered;
-	private String destination="";
+	private String memo="";
 	private Integer acctID;
 	private Timestamp ts = Timestamp.valueOf(LocalDateTime.now());;
 	/**
 	 * @param transactionID
 	 * @param ammountTransfered
-	 * @param destination
+	 * @param Memo "A description of transaction deposit or withdrawal"
 	 * @param acctID
 	 * @param ts Time the transaction object was constructed
 	 */
