@@ -50,14 +50,11 @@ public class Account implements Serializable {
 	public Account() {}
 
 	public synchronized boolean addCustomerToAccount(Integer custID) {
-		try {
-			this.acctCustomerIDs.add(custID);
-			return true;
-		} catch (Exception e) {
-			System.out.println(String.format("Customer with id %d failed to be added "
-					+ "to account with id %d.", custID, this.acctID));
-			return false;
-		}
+		return this.acctCustomerIDs.add(custID);
+	}
+	
+	public synchronized boolean removeCustomerFromAccount(Integer custID) {
+		return this.acctCustomerIDs.remove(custID);
 	}
 	
 	//GetterSetters
