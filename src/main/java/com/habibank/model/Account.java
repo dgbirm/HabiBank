@@ -11,6 +11,7 @@ package com.habibank.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -18,7 +19,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="account")
@@ -26,8 +26,11 @@ public class Account implements Serializable {
 
 	private static final long serialVersionUID = -776361010511187135L;
 	
-	private final @Id @GeneratedValue Integer acctID;
-	private @Transient Set<Integer> acctCustomerIDs;
+	@Id
+	@GeneratedValue
+	private final Integer acctID;
+	
+	private Set<Integer> acctCustomerIDs = new HashSet<>();
 	private Double acctBalance=0.0;
 	private Enum<AccountType> acctType = AccountType.CHECKING;
 	
@@ -39,50 +42,21 @@ public class Account implements Serializable {
 	 * @param acctBalance Balance for the account. If not given, defaults to 0
 	 * @param acctType type of the account (checking or savings)
 	 */
-	public Account(Integer acctID, Set<Integer> acctCustomerIDs,
-			Enum<AccountType> acctType, Double acctBalance) {
-		this.acctID = acctID;
-		this.acctCustomerIDs = acctCustomerIDs;
-		this.acctType = acctType;
-		this.acctBalance = acctBalance;
-	}
 	
-	public Account(Integer acctID, Set<Integer> acctCustomerIDs,
-			Enum<AccountType> acctType) {
-		this.acctID = acctID;
-		this.acctCustomerIDs = acctCustomerIDs;
+	public Account( Enum<AccountType> acctType) {
 		this.acctType = acctType;
 	}
 	
-	public Account(Integer acctID, Set<Integer> acctCustomerIDs) {
-		this.acctID = acctID;
-		this.acctCustomerIDs = acctCustomerIDs;
-	}
+	public Account() {}
 
+	public synchronized boolean addCustomerToAccount(Integer custID) {
+		return this.acctCustomerIDs.add(custID);
+	}
 	
-
-	//toString
-	@Override
-	public String toString() {
-		final int maxLen = 5;
-		return "Account [acctID=" + acctID + ", acctCustomerIDs="
-				+ (acctCustomerIDs != null ? toString(acctCustomerIDs, maxLen) : null)
-				+ ", acctBalance=" + acctBalance + ", acctType=" + acctType.toString() + "]";
+	public synchronized boolean removeCustomerFromAccount(Integer custID) {
+		return this.acctCustomerIDs.remove(custID);
 	}
-
-	private String toString(Collection<?> collection, int maxLen) {
-		StringBuilder builder = new StringBuilder();
-		builder.append("[");
-		int i = 0;
-		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
-			if (i > 0)
-				builder.append(", ");
-			builder.append(iterator.next());
-		}
-		builder.append("]");
-		return builder.toString();
-	}
-
+	
 	//GetterSetters
 	/**
 	 * @return the acctCustomerIDs
@@ -96,13 +70,6 @@ public class Account implements Serializable {
 	 */
 	public synchronized Double getAcctBalance() {
 		return acctBalance;
-	}
-
-	/**
-	 * @param acctBalance the acctBalance to set
-	 */
-	public synchronized void setAcctBalance(Double acctBalance) {
-		this.acctBalance = acctBalance;
 	}
 
 	/**
@@ -124,6 +91,28 @@ public class Account implements Serializable {
 	 */
 	public synchronized Integer getAcctID() {
 		return acctID;
+	}
+
+	//toString
+	@Override
+	public String toString() {
+		final int maxLen = 5;
+		return "Account [acctID=" + acctID + ", acctCustomerIDs="
+				+ (acctCustomerIDs != null ? toString(acctCustomerIDs, maxLen) : null)
+				+ ", acctBalance=" + acctBalance + ", acctType=" + acctType.toString() + "]";
+	}
+
+	private String toString(Collection<?> collection, int maxLen) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int i = 0;
+		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+			if (i > 0)
+				builder.append(", ");
+			builder.append(iterator.next());
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }
