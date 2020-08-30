@@ -14,15 +14,16 @@ import java.time.LocalDateTime;
  */
 public class Transaction {
 	private final @Id @GeneratedValue Integer transactionID;
-	//private Double initialBalance
-	//private Double finalBalance
-	private Double ammountTransfered;
+	// TODO Consideration should we add sourceAccountId and a destinationAccountId?
+	//private Double initialBalance;
+	//private Double finalBalance;
+	private Double amountTransfered;
 	private String memo="";
 	private Integer acctID;
 	private Timestamp ts = Timestamp.valueOf(LocalDateTime.now());;
 	/**
 	 * @param transactionID
-	 * @param ammountTransfered
+	 * @param amountTransfered
 	 * @param Memo "A description of transaction deposit or withdrawal"
 	 * @param acctID
 	 * @param ts Time the transaction object was constructed

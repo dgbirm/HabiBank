@@ -3,9 +3,11 @@
  * @author Chris Jabbour
  * @author Matt Knudsvig
  * @author Dan Birmingham. Please reach out to dgbirm@gmail.com
- * @author Natasha...
+ * @author Natasha Ng...
  * Date generated: Aug 28, 2020
- * @version jdk-11
+ * @version jdk-14
+ * 
+ * Also known as an domain entity or entity object
  */
 package com.habibank.model;
 
@@ -26,10 +28,15 @@ public class Account implements Serializable {
 
 	private static final long serialVersionUID = -776361010511187135L;
 	
+	//Should we add a parent or main customer id to account
+	// @OneToMany
+	// @JoinColumn(name = "acct_id")
+	// private Account AccountOwner;
+
 	private final @Id @GeneratedValue Integer acctID;
 	private @Transient Set<Integer> acctCustomerIDs;
 	private Double acctBalance=0.0;
-	private Enum<AccountType> acctType = AccountType.CHECKING;
+	private Enum<AccountType> acctType = AccountType.CHECKING; // should we make logic to set Account type
 	
 	//Constructors
 	/**

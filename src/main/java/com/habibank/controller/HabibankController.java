@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.habibank.model.Account;
-import com.habibank.repo.AccountRepository;
+import com.habibank.repository.AccountRepository;
 
 
 /*
@@ -22,9 +22,11 @@ Designate as home page controller
 
 ideas:
 
-Habibank Index/home RestController
+Habibank Index/home RestController (view all objects?)
 	||||||
-CusotmerRest
+   (user login/registrationRest)
+	|||||
+CusotmerProfileRest  (there should be a login/registration logic in customer or in a seperate user profile)
     |||||||
 AccountdetailsRest
 	|||||||
@@ -36,9 +38,19 @@ TransactionsRest
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class HabibankController {
-	
+
+	//Inject 
 	@Autowired
 	private AccountRepository acctRepo;
+
+	@Autowired
+	private CustomerRepository custRepo;
+
+	@Autowired
+	private TransactionRepository transRepo;
+
+
+	//Add constructor to add all the needed repositories
 
 	@RequestMapping(value = "/") //flag index to support root
 	private String index() {

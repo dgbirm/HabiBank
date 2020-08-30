@@ -16,15 +16,25 @@ import java.io.Serializable;
 @Table(name="customer")
 public class Customer implements Serializable {
 
+	// Thought: 
+	//TODO Should we add a password property for a customer to login? for login
+
 	private static final long serialVersionUID = 2639005257252900439L;
+	
 	private final @Id @GeneratedValue  Integer customerID; //Add transient like the field in account?
+	
 	private String customerName = "";
-	private String address= "";
-	private String city = "";
-	private String country = "";
+	
+	@Email
+	@NotNull
+	private String email = "";
+
+	private String address= ""; private String city = ""; private String country = "";
 	/**
 	 * @param customerID id of the customer
 	 * @param customerName given name of the customer. "" by default
+	 * @param email a email to identify a customer or username. cant be null
+	 * @param password password to access customer details
 	 * @param address customer addr. Empty String if unknown
 	 * @param city city of residence. Empty String if unknown
 	 * @param country country of residence. Empty String if unknown
