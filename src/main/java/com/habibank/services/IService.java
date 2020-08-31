@@ -1,6 +1,6 @@
 package com.habibank.services;
-import org.springframework.data.domain.page;
-import org.springframework.data.domain.pageable;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 
 public interface IService<T> {
     

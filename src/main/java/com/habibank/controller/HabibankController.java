@@ -3,6 +3,7 @@ package com.habibank.controller;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.habibank.model.Account;
-import com.habibank.repository.AccountRepository;
+import com.habibank.model.Customer;
+import com.habibank.model.Transaction;
+import com.habibank.repo.AccountRepository;
+import com.habibank.repo.CustomerRepository;
+import com.habibank.repo.TransactionRepository;
 
 
 /*
@@ -61,7 +66,7 @@ public class HabibankController {
 
 	//Get all customers or view all customers  
 	@GetMapping("api/customers")
-	private Iterable<Account> getAllCust(Pageable pg) {
+	private Page<Customer> getAllCust(Pageable pg) {
         return this.custRepo.findAll(pg);
 	}
 
@@ -75,7 +80,7 @@ public class HabibankController {
 
 	//Get all transactions or view all transactions
 	@GetMapping("api/transactions")
-	private Iterable<Account> getAllTrans(Pageable pg) {
+	private Page<Transaction> getAllTrans(Pageable pg) {
         return this.transRepo.findAll(pg);
 	}
 	
