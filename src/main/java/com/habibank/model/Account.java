@@ -3,7 +3,7 @@
  * @author Chris Jabbour
  * @author Matt Knudsvig
  * @author Dan Birmingham. Please reach out to dgbirm@gmail.com
- * @author Natasha Ng...
+ * @author Natasha Ng.
  * Date generated: Aug 28, 2020
  * @version jdk-14
  * 
@@ -36,7 +36,7 @@ public class Account implements Serializable {
 	private final @Id @GeneratedValue Integer acctID;
 	private @Transient Set<Integer> acctCustomerIDs;
 	private Double acctBalance=0.0;
-	private Enum<AccountType> acctType = AccountType.CHECKING; // should we make logic to set Account type
+	private Enum<AccountType> acctType = AccountType.CHECKING; // should we make logic for setting enum type of Account type
 	
 	//Constructors
 	/**
