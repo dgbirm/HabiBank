@@ -1,5 +1,6 @@
 import React from "react";
 import "./AccountHome.css";
+import { connect } from "react-redux";
 
 /**
  * Home page when a user successfully logs in
@@ -9,4 +10,10 @@ const AccountHome = () => {
   return <div>Account Home</div>;
 };
 
-export default AccountHome;
+// export default AccountHome;
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(AccountHome);
