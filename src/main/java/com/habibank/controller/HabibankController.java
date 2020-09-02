@@ -3,6 +3,7 @@ package com.habibank.controller;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,28 +15,86 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.habibank.model.Account;
-import com.habibank.model.Customer_Account;
+import com.habibank.model.Customer;
+import com.habibank.model.Transaction;
 import com.habibank.repo.AccountRepository;
-import com.habibank.repo.Customer_AccountRepository;
+import com.habibank.repo.CustomerRepository;
+import com.habibank.repo.TransactionRepository;
+
+
+/*
+Designate as home page controller
+
+ideas:
+
+Habibank Index/home RestController (view all objects?)
+	||||||
+   (user login/registrationRest)
+	|||||
+CusotmerProfileRest  (there should be a login/registration logic in customer or in a seperate user profile)
+    |||||||
+AccountdetailsRest
+	|||||||
+TransactionsRest
+
+
+*/
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class HabibankController {
-	
+
+	//Inject 
 	@Autowired
 	private AccountRepository acctRepo;
 	@Autowired
 	private Customer_AccountRepository c_aRepo;
+
+	@Autowired
+	private CustomerRepository custRepo;
+
+	@Autowired
+	private TransactionRepository transRepo;
+
+
+	//Add constructor to add all the needed repositories
 
 	@RequestMapping(value = "/") //flag index to support root
 	private String index() {
 		return "index";
 	}
 	
+
+
+	//Get all customers or view all customers  
+	@GetMapping("api/customers")
+	private Page<Customer> getAllCust(Pageable pg) {
+        return this.custRepo.findAll(pg);
+	}
+
+
+	//Get all accounts of one customer or view all accounts
 	@GetMapping("api/accounts")
 	private Iterable<Account> getAllAcct(Pageable pg) {
         return this.acctRepo.findAll(pg);
-    }
+	}
+	
+
+	//Get all transactions or view all transactions
+	@GetMapping("api/transactions")
+	private Page<Transaction> getAllTrans(Pageable pg) {
+        return this.transRepo.findAll(pg);
+	}
+	
+
+	//Get a specific account
+
+
+	//Get customer
+
+
+
+
 	
 //	@PostMapping("api/employees")
 //	private ResponseEntity<?> createEmp(@RequestBody Account e) {

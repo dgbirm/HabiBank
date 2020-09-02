@@ -1,13 +1,17 @@
+package com.habibank.model;
+
 /*
  * Copyright (c) 2020 as part of HabiBank, All rights reserved.
  * @author Chris Jabbour
  * @author Matt Knudsvig
  * @author Dan Birmingham. Please reach out to dgbirm@gmail.com
- * @author Natasha...
+ * @author Natasha Ng.
  * Date generated: Aug 28, 2020
- * @version jdk-11
+ * @version jdk-14
+ * 
+ * Also known as an domain entity or entity object
  */
-package com.habibank.model;
+
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -20,16 +24,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+import com.habibank.model.AccountType;
+
 @Entity
 @Table(name="account")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = -776361010511187135L;
 	
+	//Should we add a parent or main customer id to account
+	// @OneToMany
+	// @JoinColumn(name = "acct_id")
+	// private Account AccountOwner;
+
 	@Id
 	@GeneratedValue
 	private final Integer acctID;
-	
+
 	private Set<Integer> acctCustomerIDs = new HashSet<>();
 	private Double acctBalance=0.0;
 	private Enum<AccountType> acctType = AccountType.CHECKING;
@@ -42,6 +54,16 @@ public class Account implements Serializable {
 	 * @param acctBalance Balance for the account. If not given, defaults to 0
 	 * @param acctType type of the account (checking or savings)
 	 */
+  
+	public Account(Enum<AccountType> acctType) {
+		this.acctType = acctType;
+	}
+	
+	public Account() {}
+
+	public synchronized boolean addCustomerToAccount(Integer custID) {
+		return this.acctCustomerIDs.add(custID);
+	}
 	
 	public Account( Enum<AccountType> acctType) {
 		this.acctType = acctType;
@@ -52,7 +74,7 @@ public class Account implements Serializable {
 	public synchronized boolean addCustomerToAccount(Integer custID) {
 		return this.acctCustomerIDs.add(custID);
 	}
-	
+
 	public synchronized boolean removeCustomerFromAccount(Integer custID) {
 		return this.acctCustomerIDs.remove(custID);
 	}
@@ -114,5 +136,5 @@ public class Account implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }
