@@ -6,7 +6,12 @@ const App = (props) => {
   return (
     <div className="App">
       <Header />
-      <props.ChildComponent />
+      {props.Type !== undefined ? (
+        <props.ChildComponent Type={props.Type} />
+      ) : (
+        <props.ChildComponent />
+      )}
+      {/* <props.ChildComponent /> */}
     </div>
   );
 };

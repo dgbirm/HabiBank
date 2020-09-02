@@ -1,7 +1,7 @@
 import React from "react";
 import "./RegisterUser.css";
 import { connect } from "react-redux";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 /**
  * Form for user to sign up as a customer
  */

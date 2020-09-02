@@ -1,20 +1,51 @@
 import React from "react";
 import "./Header.css";
 import { connect } from "react-redux";
-import { Navbar } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 /**
- * Displays savings or checkings account info here (balance, transaction history)
+ * Universal header when the user is logged in
  */
 const Header = () => {
+  // temp data
+  let loggedIn = true;
+  let first = "Jane";
+  let last = "Doe";
+
+  const renderName = (status) => {
+    let name = status ? `${first} ${last}` : "Guest";
+    return (
+      <Navbar.Text>
+        Welcome, <a>{name}</a>
+      </Navbar.Text>
+    );
+  };
+
+  const renderLinks = (status) => {
+    if (status) {
+      return (
+        <Nav>
+          <Nav.Link href="/home">Home</Nav.Link>
+          <NavDropdown title="Settings" id="collasible-nav-dropdown">
+            <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+            <NavDropdown.Item href="/logout">Log out</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+      );
+    } else {
+      return (
+        <Nav>
+          <Nav.Link href="/">Log In</Nav.Link>
+        </Nav>
+      );
+    }
+  };
+
   return (
     <div>
-      <Navbar>
-        <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
-        <Navbar.Toggle />
+      <Navbar bg="primary" variant="dark">
+        {renderName(loggedIn)}
         <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            Signed in as: <a href="#login">Mark Otto</a>
-          </Navbar.Text>
+          {renderLinks(loggedIn)}
         </Navbar.Collapse>
       </Navbar>
     </div>
