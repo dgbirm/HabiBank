@@ -1,34 +1,57 @@
 import React from "react";
 import "./Transaction.css";
 import { connect } from "react-redux";
+import { Form, Button } from "react-bootstrap";
 
 /**
  * Transaction page. Options for user to withdraw, deposit, transfer
+ * TO DO: pull from redux store
  */
 const Transaction = (props) => {
-  const renderSingleAccount = () => {
-    return <div>Dropdown, input number, submit button</div>;
+  const renderSrcSelect = () => {
+    return (
+      <Form.Group controlId="exampleForm.ControlSelect1">
+        <Form.Label>From account</Form.Label>
+        <Form.Control as="select">
+          <option>Savings</option>
+          <option>Checkings</option>
+        </Form.Control>
+      </Form.Group>
+    );
   };
 
-  const renderTwoAccounts = (type) => {
-    return <div>from and to dropdown, input number, submit button</div>;
+  const renderTgtSelect = () => {
+    return (
+      <Form.Group controlId="exampleForm.ControlSelect2">
+        <Form.Label>To account</Form.Label>
+        <Form.Control as="select">
+          <option>Savings</option>
+          <option>Checkings</option>
+        </Form.Control>
+      </Form.Group>
+    );
   };
 
-  // have a redux value for type
-  const conditionalActions = (type) => {
-    if (type === "Deposit" || type === "Withdraw") {
-      return renderSingleAccount();
-    }
-
-    // Transfer
-    else {
-      return renderTwoAccounts();
-    }
+  const renderAmount = () => {
+    return (
+      <Form.Group controlId="exampleForm.ControlInput1">
+        <Form.Label>Amount</Form.Label>
+        <Form.Control type="text" placeholder="$" />
+      </Form.Group>
+    );
   };
 
   return (
     <div>
-      Transaction {props.Type} {conditionalActions(props.Type)}
+      Transaction {props.Type}
+      <Form>
+        {renderSrcSelect()}
+        {props.Type === "Transfer" ? renderTgtSelect() : null}
+        {renderAmount()}
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
     </div>
   );
 };
