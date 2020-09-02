@@ -48,11 +48,7 @@ public class HabibankController {
 	@Autowired
 	private AccountRepository acctRepo;
 	@Autowired
-	private Customer_AccountRepository c_aRepo;
-
-	@Autowired
 	private CustomerRepository custRepo;
-
 	@Autowired
 	private TransactionRepository transRepo;
 

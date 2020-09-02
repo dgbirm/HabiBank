@@ -14,18 +14,17 @@ package com.habibank.model;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.habibank.model.AccountType;
 
 
 @Entity
@@ -41,10 +40,13 @@ public class Account implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Integer acctID;
+	private Integer acctID = null;
 
-	@ManyToMany(mappedBy = "accounts", cascade = CascadeType.PERSIST,
-			 	fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "accounts",
+				cascade = { 
+						//CascadeType.MERGE,
+						CascadeType.PERSIST
+					})
 	private Set<Customer> customersOnAccount = new HashSet<>();
 	
 	private Double acctBalance=0.0;
@@ -64,17 +66,33 @@ public class Account implements Serializable {
 	}
 	
 	public Account() {}
+	
+	public Set<Customer> getCustomers() {
+		return this.customersOnAccount;
+	}
+	
+//toString
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		return "Account [acctID=" + acctID + ", customersOnAccount="
+				+ (customersOnAccount != null ? toString(customersOnAccount, maxLen) : null) + ", acctBalance="
+				+ acctBalance + ", acctType=" + acctType + "]";
+	}
 
-	public synchronized boolean addCustomerToAccount(Customer cust) {
-		return this.customersOnAccount.add(cust) &&
-				cust.getAccounts().add(this);
+	private String toString(Collection<?> collection, int maxLen) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int i = 0;
+		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+			if (i > 0)
+				builder.append(", ");
+			builder.append(iterator.next());
+		}
+		builder.append("]");
+		return builder.toString();
 	}
-	
-	public synchronized boolean removeCustomerFromAccount(Customer cust) {
-		return this.customersOnAccount.remove(cust) &&
-				cust.getAccounts().remove(this);
-	}
-	
+
 	//GetterSetters
 	/**
 	 * @return the acctCustomerIDs

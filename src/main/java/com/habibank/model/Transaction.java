@@ -9,12 +9,15 @@ package com.habibank.model;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
  * The Class Transaction.
  */
+@Entity
+
 public class Transaction {
 	private final @Id @GeneratedValue Integer transactionID;
 	// TODO Consideration should we add sourceAccountId and a destinationAccountId?
