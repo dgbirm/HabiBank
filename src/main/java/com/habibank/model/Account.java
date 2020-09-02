@@ -41,7 +41,7 @@ public class Account implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private final Integer acctID;
+	private Integer acctID;
 
 	@ManyToMany(mappedBy = "accounts", cascade = CascadeType.PERSIST,
 			 	fetch = FetchType.EAGER)
