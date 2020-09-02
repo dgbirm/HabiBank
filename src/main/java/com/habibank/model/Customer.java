@@ -7,11 +7,20 @@
 package com.habibank.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 
 //TODO: Set the table relationships
@@ -27,143 +36,119 @@ public class Customer implements Serializable {
 
 	private static final long serialVersionUID = 2639005257252900439L;
 	
-	@Id @GeneratedValue 
-	private final  Integer customerID; //Add transient like the field in account?
+	@Id
+	@GeneratedValue 
+	private Integer custID = null; 
+	@ManyToMany(fetch = FetchType.LAZY, 
+				cascade= { 
+					CascadeType.MERGE,
+					CascadeType.PERSIST
+				})
+	@JoinTable(
+			name = "cust_acct",
+			joinColumns = @JoinColumn(name = "custID"),
+			inverseJoinColumns = @JoinColumn(name = "acctID")
+			)
+	private Set<Account> accounts = new HashSet<>();
 	
-	private String customerName = "";	
-    private String password = "";
-    private String userName = "";
-
+	private String userName = "";
+	private String fullName = "";
 	private String email = "";
+	//TODO: address class?
+	private String address= "";
+	//TODO: @Phone annotation
+	private PhoneNumber phoneNumber;
 
-	private String address= ""; private String city = ""; private String country = "";
+
 	/**
-	 * @param customerID id of the customer
-	 * @param customerName given name of the customer. "" by default
-	 * @param username  customer username for login
-	 * @param email a email to identify a customer or username. cant be null
-	 * @param password password to access customer details
+	 * @param custID id of the customer
+	 * @param custName given name of the customer. "" by default
+	 * @param fullname  customer fullname for login
+	 * @param email a email to identify a customer or fullname. cant be null
 	 * @param address customer addr. Empty String if unknown
-	 * @param city city of residence. Empty String if unknown
-	 * @param country country of residence. Empty String if unknown
 	 */
 	
-	//Constructors 
-	public Customer(Integer customerID, String customerName, 
-			String password, String userName, String email, String address, String city, String country) {
-		this.customerID = customerID;
-		this.customerName = customerName;
-		this.email = email;
-		this.password = password;
+//Constructors 
+	public Customer(String userName, String fullName, String email, String address, PhoneNumber phoneNumber) {
 		this.userName = userName;
+		this.fullName = fullName;
+		this.email = email;
 		this.address = address;
-		this.city = city;
-		this.country = country;
+		this.phoneNumber = phoneNumber;
 	}
 	
-	public Customer(Integer customerID, String customerName, String address, String city) {
-		this.customerID = customerID;
-		this.customerName = customerName;
-		this.address = address;
-		this.city = city;
+	public Customer() {}
+	
+	public synchronized Set<Account> getAccounts() {
+		return this.accounts;
 	}
 	
-	public Customer(Integer customerID, String customerName) {
-		this.customerID = customerID;
-		this.customerName = customerName;
+	public synchronized boolean addCustomerToAccount(Account acct) {
+		return this.getAccounts().add(acct) &&
+				acct.getCustomersOnAccount().add(this);
+			}
+	
+	public synchronized boolean removeCustomerFromAccount(Account acct) {
+		return this.getAccounts().remove(acct) &&
+				acct.getCustomersOnAccount().remove(this);
 	}
 	
 //toString
 	@Override
 	public String toString() {
-		return "Customer [customerID=" + customerID + ", customerName=" + customerName + ", address=" + address
-				+ ", city=" + city + ", country=" + country + "]";
+		return "Customer [custID=" + custID
+				+ ", userName=" + userName + ", fullName=" + fullName + ", email=" + email + ", address=" + address
+				+ ", phoneNumber=" + phoneNumber + "]";
 	}
-//getterSetters
-	/**
-	 * @return the customerName
-	 */
-	public synchronized String getCustomerName() {
-		return customerName;
-	}
-
-	/**
-	 * @param customerName the customerName to set
-	 */
-	public synchronized void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	
+//GetterSetters
+	public synchronized Integer getCustomerID() {
+		return custID;
 	}
 
-	/**
-	 * @return the address
-	 */
+	public synchronized String getUserName() {
+		return userName;
+	}
+
+	public synchronized void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public synchronized String getFullName() {
+		return fullName;
+	}
+
+	public synchronized void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public synchronized String getEmail() {
+		return email;
+	}
+
+	public synchronized void setEmail(String email) {
+		this.email = email;
+	}
+
 	public synchronized String getAddress() {
 		return address;
 	}
 
-	/**
-	 * @param address the address to set
-	 */
 	public synchronized void setAddress(String address) {
 		this.address = address;
 	}
 
-	/**
-	 * @return the city
-	 */
-	public synchronized String getCity() {
-		return city;
+	public synchronized PhoneNumber getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	/**
-	 * @param city the city to set
-	 */
-	public synchronized void setCity(String city) {
-		this.city = city;
+	public synchronized void setPhoneNumber(PhoneNumber phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
+	
 
-	/**
-	 * @return the country
-	 */
-	public synchronized String getCountry() {
-		return country;
-	}
+//getterSetters
+	
+	
 
-	/**
-	 * @param country the country to set
-	 */
-	public synchronized void setCountry(String country) {
-		this.country = country;
-	}
-
-	/**
-	 * @return the customerID
-	 */
-	public synchronized Integer getCustomerID() {
-		return customerID;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 }
