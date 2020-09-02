@@ -47,6 +47,8 @@ public class HabibankController {
 	//Inject 
 	@Autowired
 	private AccountRepository acctRepo;
+	@Autowired
+	private Customer_AccountRepository c_aRepo;
 
 	@Autowired
 	private CustomerRepository custRepo;

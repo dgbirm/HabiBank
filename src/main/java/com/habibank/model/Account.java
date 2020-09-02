@@ -24,6 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 import com.habibank.model.AccountType;
 
 @Entity
@@ -36,8 +37,11 @@ public class Account implements Serializable {
 	// @OneToMany
 	// @JoinColumn(name = "acct_id")
 	// private Account AccountOwner;
-	@Id @GeneratedValue 
+
+	@Id
+	@GeneratedValue
 	private final Integer acctID;
+
 	private Set<Integer> acctCustomerIDs = new HashSet<>();
 	private Double acctBalance=0.0;
 	private Enum<AccountType> acctType = AccountType.CHECKING;
@@ -50,6 +54,7 @@ public class Account implements Serializable {
 	 * @param acctBalance Balance for the account. If not given, defaults to 0
 	 * @param acctType type of the account (checking or savings)
 	 */
+  
 	public Account(Enum<AccountType> acctType) {
 		this.acctType = acctType;
 	}
@@ -60,6 +65,16 @@ public class Account implements Serializable {
 		return this.acctCustomerIDs.add(custID);
 	}
 	
+	public Account( Enum<AccountType> acctType) {
+		this.acctType = acctType;
+	}
+	
+	public Account() {}
+
+	public synchronized boolean addCustomerToAccount(Integer custID) {
+		return this.acctCustomerIDs.add(custID);
+	}
+
 	public synchronized boolean removeCustomerFromAccount(Integer custID) {
 		return this.acctCustomerIDs.remove(custID);
 	}
@@ -121,4 +136,5 @@ public class Account implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
