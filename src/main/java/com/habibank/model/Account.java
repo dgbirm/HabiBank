@@ -1,5 +1,3 @@
-package com.habibank.model;
-
 /*
  * Copyright (c) 2020 as part of HabiBank, All rights reserved.
  * @author Chris Jabbour
@@ -7,16 +5,16 @@ package com.habibank.model;
  * @author Dan Birmingham. Please reach out to dgbirm@gmail.com
  * @author Natasha Ng.
  * Date generated: Aug 28, 2020
- * @version jdk-14
- * 
- * Also known as an domain entity or entity object
+ * @version jdk-11
  */
 
+package com.habibank.model;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
+import com.habibank.exceptions.OverdraftException;
 
 
 @Entity
@@ -46,7 +45,8 @@ public class Account implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Integer acctID;
+	@Column(updatable = false)
+	private Long acctID;
 
 	@ManyToMany(mappedBy = "accounts",
 				cascade = { 
@@ -78,6 +78,25 @@ public class Account implements Serializable {
 		return this.customersOnAccount;
 	}
 	
+	public Transaction deposit(Double ammount, String memo) {
+		acctBalance += ammount;
+		return new Transaction(this, ammount, memo);
+	}
+	
+	public Transaction withdraw(Double ammount, String memo) {
+		Double newBalance = acctBalance - ammount;
+		try {
+			if (newBalance < 0) {
+				throw new OverdraftException(this, acctBalance);
+			}
+			acctBalance = newBalance;
+			return new Transaction(this,0 - ammount, memo);
+		} catch (OverdraftException e) {
+			e.getMessage();
+			return null;
+		}
+	}
+	
 //toString
 	@Override
 	public String toString() {
@@ -100,7 +119,27 @@ public class Account implements Serializable {
 		return builder.toString();
 	}
 
-	//GetterSetters
+	
+//hashcode	
+	@Override
+	public int hashCode() {
+		return Objects.hash(acctID);
+	}
+
+//equals
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		return Objects.equals(acctID, other.acctID);
+	}
+
+//GetterSetters
 	/**
 	 * @return the acctCustomerIDs
 	 */
@@ -132,7 +171,7 @@ public class Account implements Serializable {
 	/**
 	 * @return the acctID
 	 */
-	public synchronized Integer getAcctID() {
+	public synchronized Long getAcctID() {
 		return acctID;
 	}
 
