@@ -1,13 +1,17 @@
 /*
- * Copyright (c) 2020 as part of Bank, All rights reserved.
+ * Copyright (c) 2020 as part of HabiBank, All rights reserved.
+ * @author Chris Jabbour
+ * @author Matt Knudsvig
  * @author Dan Birmingham. Please reach out to dgbirm@gmail.com
- * Date generated: Jul 29, 2020
- * @version jdk-14
+ * @author Natasha Ng.
+ * Date generated: Aug 28, 2020
+ * @version jdk-11
  */
 package com.habibank.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,10 +26,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 
 //TODO: Set the table relationships
@@ -42,8 +43,10 @@ public class Customer implements Serializable {
 	private static final long serialVersionUID = 2639005257252900439L;
 	
 	@Id
-	@GeneratedValue 
-	private Integer custID; 
+	@GeneratedValue
+	@Column(updatable = false)
+	private Long custID;
+	
 	@ManyToMany(fetch = FetchType.LAZY, 
 				cascade= { 
 					CascadeType.MERGE,
@@ -54,7 +57,6 @@ public class Customer implements Serializable {
 			joinColumns = @JoinColumn(name = "custID"),
 			inverseJoinColumns = @JoinColumn(name = "acctID")
 			)
-	
 	@JsonIgnore
 	private Set<Account> accounts = new HashSet<>();
 	
@@ -109,8 +111,28 @@ public class Customer implements Serializable {
 				+ ", phoneNumber=" + phoneNumber + "]";
 	}
 	
+
+//hashcode
+	@Override
+	public int hashCode() {
+		return Objects.hash(custID);
+	}
+
+//equals
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		return Objects.equals(custID, other.custID);
+	}
+
 //GetterSetters
-	public synchronized Integer getCustomerID() {
+	public synchronized Long getCustomerID() {
 		return custID;
 	}
 

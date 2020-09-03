@@ -3,10 +3,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.habibank.model.Account;
 import com.habibank.model.AccountType;
 import com.habibank.model.Customer;
+import com.habibank.model.Transaction;
 import com.habibank.repo.AccountRepository;
 import com.habibank.repo.CustomerRepository;
 import com.habibank.repo.TransactionRepository;
@@ -46,6 +46,11 @@ public class DatabaseLoader implements CommandLineRunner {
 		dan.addCustomerToAccount(danXMatt);
 		matt.addCustomerToAccount(danXMatt);
 		
+		Transaction trans1 = chrisAcct.deposit(100.0, "Initial deposit");
+		Transaction trans2 = chrisAcct.withdraw(10.0, "Money for lunch");
+		Transaction trans3 = danXMatt.deposit(1000.0, "Init dep");
+		Transaction trans4 = natAcct.deposit(1000000.0, "Nats a high roller");
+		
 		this.custRepo.save(chris);
 		this.custRepo.save(matt);
 		this.custRepo.save(nat);
@@ -55,7 +60,10 @@ public class DatabaseLoader implements CommandLineRunner {
 		this.acctRepo.save(natAcct);
 		this.acctRepo.save(danXMatt);
 		
-		//Transactions
+		this.transRepo.save(trans1);
+		this.transRepo.save(trans2);
+		this.transRepo.save(trans3);
+		this.transRepo.save(trans4);
 	}
     
 }
