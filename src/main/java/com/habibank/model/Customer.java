@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 
@@ -38,7 +43,7 @@ public class Customer implements Serializable {
 	
 	@Id
 	@GeneratedValue 
-	private Integer custID = null; 
+	private Integer custID; 
 	@ManyToMany(fetch = FetchType.LAZY, 
 				cascade= { 
 					CascadeType.MERGE,
@@ -49,15 +54,18 @@ public class Customer implements Serializable {
 			joinColumns = @JoinColumn(name = "custID"),
 			inverseJoinColumns = @JoinColumn(name = "acctID")
 			)
+	
+	@JsonIgnore
 	private Set<Account> accounts = new HashSet<>();
 	
 	private String userName = "";
 	private String fullName = "";
+	@Email
 	private String email = "";
-	//TODO: address class?
 	private String address= "";
 	//TODO: @Phone annotation
-	private PhoneNumber phoneNumber;
+    @Column(length = 10)
+	private String phoneNumber;
 
 
 	/**
@@ -69,7 +77,7 @@ public class Customer implements Serializable {
 	 */
 	
 //Constructors 
-	public Customer(String userName, String fullName, String email, String address, PhoneNumber phoneNumber) {
+	public Customer(String userName, String fullName, String email, String address, String phoneNumber) {
 		this.userName = userName;
 		this.fullName = fullName;
 		this.email = email;
@@ -138,11 +146,11 @@ public class Customer implements Serializable {
 		this.address = address;
 	}
 
-	public synchronized PhoneNumber getPhoneNumber() {
+	public synchronized String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public synchronized void setPhoneNumber(PhoneNumber phoneNumber) {
+	public synchronized void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	

@@ -31,10 +31,10 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Customer chris = new Customer("cj","Chris Jabb","cj@aol.com","nowhere", PhoneNumberUtil.getInstance().getExampleNumber("1"));
-		Customer matt = new Customer("mk","Matty K","mk@lol.com","everwhere", PhoneNumberUtil.getInstance().getExampleNumber("1"));
-		Customer nat = new Customer("nn","Natasha Ng","nn@yahoo.com","Seattle", PhoneNumberUtil.getInstance().getExampleNumber("1"));
-		Customer dan = new Customer("db","Danny B","danny@netscape.com","somewhere", PhoneNumberUtil.getInstance().getExampleNumber("1"));
+		Customer chris = new Customer("cj","Chris Jabb","fearandloathinginUSSR@aol.com","nowhere", "1233334545");
+		Customer matt = new Customer("mk","Matty K","servethesovietunion@lol.com","everwhere","2223334545");
+		Customer nat = new Customer("nn","Natasha Ng","nn@yahoo.com","Seattle","3123334545");
+		Customer dan = new Customer("db","Danny B","danny@netscape.com","somewhere", "693334545");
 		
 		Account chrisAcct = new Account();
 		chris.addCustomerToAccount(chrisAcct);

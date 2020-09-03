@@ -20,11 +20,17 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
 
 
 @Entity
@@ -40,13 +46,14 @@ public class Account implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Integer acctID = null;
+	private Integer acctID;
 
 	@ManyToMany(mappedBy = "accounts",
 				cascade = { 
 						//CascadeType.MERGE,
 						CascadeType.PERSIST
 					})
+	@JsonIgnore
 	private Set<Customer> customersOnAccount = new HashSet<>();
 	
 	private Double acctBalance=0.0;
