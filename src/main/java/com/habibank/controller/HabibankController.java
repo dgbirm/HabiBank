@@ -1,11 +1,11 @@
 package com.habibank.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,19 +40,16 @@ TransactionsRest
 
 */
 
-@RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RestController
+
 public class HabibankController {
 
 	//Inject 
 	@Autowired
 	private AccountRepository acctRepo;
 	@Autowired
-	private Customer_AccountRepository c_aRepo;
-
-	@Autowired
 	private CustomerRepository custRepo;
-
 	@Autowired
 	private TransactionRepository transRepo;
 
@@ -63,13 +60,11 @@ public class HabibankController {
 	private String index() {
 		return "index";
 	}
-	
-
 
 	//Get all customers or view all customers  
 	@GetMapping("api/customers")
-	private Page<Customer> getAllCust(Pageable pg) {
-        return this.custRepo.findAll(pg);
+	public Iterable<Customer> getAllCustomers() {
+        return custRepo.findAll();
 	}
 
 

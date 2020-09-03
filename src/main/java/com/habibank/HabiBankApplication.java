@@ -11,6 +11,3 @@ public class HabiBankApplication {
 	}
 
 }
-
-
-//Add Db loader here or in a separate file
