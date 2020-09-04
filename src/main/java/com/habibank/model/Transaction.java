@@ -1,29 +1,47 @@
 /*
- * Copyright (c) 2020 as part of Bank, All rights reserved.
+ * Copyright (c) 2020 as part of HabiBank, All rights reserved.
+ * @author Chris Jabbour
+ * @author Matt Knudsvig
  * @author Dan Birmingham. Please reach out to dgbirm@gmail.com
- * Date generated: Jul 29, 2020
- * @version jdk-14
+ * @author Natasha Ng.
+ * Date generated: Aug 28, 2020
+ * @version jdk-11
  */
 package com.habibank.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The Class Transaction.
  */
+@Entity
+@Table(name="transaction")
 public class Transaction {
-	private final @Id @GeneratedValue Integer transactionID;
-	// TODO Consideration should we add sourceAccountId and a destinationAccountId?
-	//private Double initialBalance;
-	//private Double finalBalance;
+	@Id
+	@GeneratedValue
+	@Column(updatable = false)
+	private Long transactionID;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "acctID")
+	private Account acct;
+	
 	private Double amountTransfered;
 	private String memo="";
-	private Integer acctID;
-	private Timestamp ts = Timestamp.valueOf(LocalDateTime.now());;
+	@Column(updatable = false)
+	private Timestamp ts = Timestamp.valueOf(LocalDateTime.now());
 	/**
 	 * @param transactionID
 	 * @param amountTransfered
@@ -32,51 +50,49 @@ public class Transaction {
 	 * @param ts Time the transaction object was constructed
 	 */
 	
-	//Constructors
-	public Transaction(Integer transactionID, Double amountTransfered, String memo, Integer acctID, Timestamp ts) {
-		this.transactionID = transactionID;
+//Constructors
+	public Transaction(Account acct, Double amountTransfered, String memo) {
+		this.acct = acct;
 		this.amountTransfered = amountTransfered;
 		this.memo = memo;
-		this.acctID = acctID;
-		this.ts = ts;
 	}
 	
-	public Transaction(Integer transactionID, Double amountTransfered, String memo, String destination, Integer acctID) {
-		this.transactionID = transactionID;
-		this.amountTransfered = amountTransfered;
-		this.memo = memo;
-		this.acctID = acctID;
-	}
-	
+	public Transaction() {}
 
-	public Transaction(Integer transactionID, Double ammountTransfered, Integer acctID) {
-		this.transactionID = transactionID;
-		this.amountTransfered = ammountTransfered;
-		this.acctID = acctID;
-	}
 
-	//toString
+//toString
 	@Override
 	public String toString() {
-		return "Transaction [transactionID=" + transactionID + ", ammountTransfered=" + amountTransfered
-				+ ", memo=" + memo + ", acctID=" + acctID + ", ts=" + ts + "]";
+		return "Transaction [transactionID=" + transactionID + ", acct=" + acct + ", amountTransfered="
+				+ amountTransfered + ", memo=" + memo + ", ts=" + ts + "]";
 	}
-	
-	
-	//GetterSetters
-	public synchronized Double getAmmountTransfered() {
+
+//GetterSetters
+	public synchronized Long getTransactionID() {
+		return transactionID;
+	}
+
+	public synchronized Account getAcct() {
+		return acct;
+	}
+
+	public synchronized void setAcct(Account acct) {
+		this.acct = acct;
+	}
+
+	public synchronized Double getAmountTransfered() {
 		return amountTransfered;
 	}
 
-	public synchronized void setAmmountTransfered(Double ammountTransfered) {
-		this.amountTransfered = ammountTransfered;
+	public synchronized void setAmountTransfered(Double amountTransfered) {
+		this.amountTransfered = amountTransfered;
 	}
 
 	public synchronized String getMemo() {
 		return memo;
 	}
 
-	public synchronized void setDestination(String memo) {
+	public synchronized void setMemo(String memo) {
 		this.memo = memo;
 	}
 
@@ -84,17 +100,5 @@ public class Transaction {
 		return ts;
 	}
 
-	public synchronized void setTs(Timestamp ts) {
-		this.ts = ts;
-	}
 
-	public synchronized Integer getTransactionID() {
-		return transactionID;
-	}
-
-	public synchronized Integer getAcctID() {
-		return acctID;
-	}
-	
-	
 }
