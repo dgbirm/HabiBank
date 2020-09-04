@@ -20,10 +20,10 @@ class H2Service {
         return axios.get(queryURL);
     }
 
-    async onCreate(dbName, newEmployee) {
+    async onCreate(dbName, newEntry) {
         const queryURL = `${HOST_NAME}${ROOT}/${dbName}`;
         try {
-            const response = await axios.post(queryURL, newEmployee);
+            const response = await axios.post(queryURL, newEntry);
             console.log(response);
         }
         catch (error) {
