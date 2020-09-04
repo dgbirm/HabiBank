@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-// import App from "./components/App/App";
+import App from "./components/App/App";
 import AccountHome from "./components/AccountHome/AccountHome";
 import BankAccountWrapper from "./components/BankAccountWrapper/BankAccountWrapper";
 import CreateBankAccount from "./components/CreateBankAccount/CreateBankAccount";
@@ -9,6 +9,7 @@ import Login from "./components/Login/Login";
 import RegisterUser from "./components/RegisterUser/RegisterUser";
 import Transaction from "./components/Transaction/Transaction";
 import UserProfile from "./components/UserProfile/UserProfile";
+import Logout from "./components/Logout/Logout";
 
 /**
  * App routes
@@ -19,31 +20,61 @@ import UserProfile from "./components/UserProfile/UserProfile";
 const createRoutes = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={Login} />
-      <Route path="/home" component={AccountHome} />
-      <Route path="/newaccount" component={CreateBankAccount} />
-      {/* <Route
+      <Route
+        exact
+        path="/"
+        render={(...props) => <App ChildComponent={Login} />}
+      />
+      <Route
+        path="/home"
+        render={(...props) => <App ChildComponent={AccountHome} />}
+      />
+      <Route
+        path="/newaccount"
+        render={(...props) => <App ChildComponent={CreateBankAccount} />}
+      />
+      <Route
         path="/savings"
-        render={(...props) => <BankAccountWrapper ChildComponent={Savings} />}
+        render={(...props) => (
+          <App ChildComponent={BankAccountWrapper} Type="Savings" />
+        )}
       />
       <Route
         path="/checkings"
-        render={(...props) => <BankAccountWrapper ChildComponent={Checkings} />}
+        render={(...props) => (
+          <App ChildComponent={BankAccountWrapper} Type="Checkings" />
+        )}
       />
       <Route
         path="/deposit"
-        render={(...props) => <Transaction ChildComponent={Deposit} />}
+        render={(...props) => (
+          <App ChildComponent={Transaction} Type="Deposit" />
+        )}
       />
       <Route
-        path="/withdrawal"
-        render={(...props) => <Transaction ChildComponent={Withdrawal} />}
+        path="/withdraw"
+        render={(...props) => (
+          <App ChildComponent={Transaction} Type="Withdraw" />
+        )}
       />
       <Route
         path="/transfer"
-        render={(...props) => <Transaction ChildComponent={Transfer} />}
-      /> */}
-      <Route path="/profile" component={UserProfile} />
-      <Route path="/register" component={RegisterUser} />
+        render={(...props) => (
+          <App ChildComponent={Transaction} Type="Transfer" />
+        )}
+      />
+      <Route
+        path="/profile"
+        render={(...props) => <App ChildComponent={UserProfile} />}
+      />
+      <Route
+        path="/register"
+        render={(...props) => <App ChildComponent={RegisterUser} />}
+      />
+      <Route
+        path="/logout"
+        render={(...props) => <App ChildComponent={Logout} />}
+      />
     </Switch>
   </BrowserRouter>
 );
