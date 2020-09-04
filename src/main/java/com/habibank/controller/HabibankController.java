@@ -1,10 +1,7 @@
 package com.habibank.controller;
 
 import java.net.URI;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.habibank.model.Account;
 import com.habibank.model.Customer;
@@ -43,7 +41,6 @@ TransactionsRest
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-
 public class HabibankController {
 
 	//Inject 
@@ -54,12 +51,11 @@ public class HabibankController {
 	@Autowired
 	private TransactionRepository transRepo;
 
-
-	//Add constructor to add all the needed repositories
-
-	@RequestMapping(value = "/") //flag index to support root
-	private String index() {
-		return "index";
+	@RequestMapping(value = {
+		"index"
+	}) //flag '', '/', 'index' to support [react-app] index
+	private RedirectView index() {
+		return new RedirectView("");
 	}
 
 	//Get all customers or view all customers  
