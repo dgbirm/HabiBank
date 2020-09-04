@@ -90,7 +90,7 @@ public class HabibankController {
 
 //create customer	
 	@PostMapping("api/customers")
-	private ResponseEntity<?> createEmp(@RequestBody Customer c) {
+	private ResponseEntity<?> createCust(@RequestBody Customer c) {
 		Customer createdCustomer = new Customer(
 				c.getUserName(),c.getFullName(),c.getEmail(),
 				c.getAddress(),c.getPhoneNumber());
