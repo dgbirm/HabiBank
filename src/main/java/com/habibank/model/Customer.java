@@ -62,6 +62,8 @@ public class Customer implements Serializable {
 	
 	private String userName = "";
 	private String fullName = "";
+	private String password;
+
 	@Email
 	private String email = "";
 	private String address= "";
@@ -74,13 +76,15 @@ public class Customer implements Serializable {
 	 * @param custID id of the customer
 	 * @param custName given name of the customer. "" by default
 	 * @param fullname  customer fullname for login
+	 * @param password  password for customer account
 	 * @param email a email to identify a customer or fullname. cant be null
 	 * @param address customer addr. Empty String if unknown
 	 */
 	
 //Constructors 
-	public Customer(String userName, String fullName, String email, String address, String phoneNumber) {
+	public Customer(String userName, String password, String fullName, String email, String address, String phoneNumber) {
 		this.userName = userName;
+		this.password = password;
 		this.fullName = fullName;
 		this.email = email;
 		this.address = address;
