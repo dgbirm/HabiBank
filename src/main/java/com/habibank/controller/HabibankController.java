@@ -2,6 +2,7 @@ package com.habibank.controller;
 
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,6 +52,7 @@ public class HabibankController {
 	@Autowired
 	private TransactionRepository transRepo;
 
+	// should this be done on the front-end?
 	@RequestMapping(value = {
 		"index"
 	}) //flag '', '/', 'index' to support [react-app] index
