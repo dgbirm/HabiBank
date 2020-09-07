@@ -1,6 +1,8 @@
 package com.habibank.security;
 
-import com.habibank.security.services.CustomerDetailsServiceImpl;
+import com.habibank.security.services.UserDetails;
+import com.habibank.security.services.UserDetailsService;
+import com.habibank.security.services.UsersDetailsServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,13 +26,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-		// securedEnabled = true,
-		// jsr250Enabled = true,
-        prePostEnabled = true)
+    // securedEnabled = true,
+    // jsr250Enabled = true,
+    prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
-	CustomerDetailsServiceImpl custDetailsService;
+  UsersDetailsServiceImpl userDetailsService;
+
 
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
@@ -39,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception 
   {
-    authenticationManagerBuilder.custDetailsService(custDetailsService).passwordEncoder(passwordEncoder());
+    authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
   }
   
   @Bean
@@ -57,16 +60,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure( HttpSecurity http) 
       throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-          .antMatchers(
-            HttpMethod.GET,
-            "/index*", "/static/**", "/*.js", "/*.json", "/*.ico")
-            .permitAll()
           .anyRequest().authenticated()
           .and()
+
           .formLogin().loginPage("/index.html")
           .loginProcessingUrl("/perform_login")
           .defaultSuccessUrl("/homepage.html",true) //

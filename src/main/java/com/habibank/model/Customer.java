@@ -23,75 +23,82 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 //TODO: Set the table relationships
 /**
- * The class Customer: describes a Customer object 
+ * The class Customer: describes a Customer object
+ * Reuse code from user to add email and username and password
  */
 @Entity
-@Table(name="customer")
-public class Customer implements Serializable {
+@Table(name = "customer")
+public class Customer extends User {
 
-	// Thought: 
-	//TODO Should we add a password property for a customer to login? for login
+	// Thought:
+	// TODO Should we add a password property for a customer to login? for login
 
 	private static final long serialVersionUID = 2639005257252900439L;
-	
+
 	@Id
 	@GeneratedValue
 	@Column(updatable = false)
 	private Long custID;
-	
-	@ManyToMany(fetch = FetchType.LAZY, 
-				cascade= { 
-					CascadeType.MERGE,
-					CascadeType.PERSIST
-				})
-	@JoinTable(
-			name = "cust_acct",
-			joinColumns = @JoinColumn(name = "custID"),
-			inverseJoinColumns = @JoinColumn(name = "acctID")
-			)
+
+
+
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(name = "cust_acct",  joinColumns = @JoinColumn(name = "custID"), inverseJoinColumns = @JoinColumn(name = "acctID"))
 	@JsonIgnore
 	private Set<Account> accounts = new HashSet<>();
-	
-	private String userName = "";
-	private String fullName = "";
-	private String password;
 
-	@Email
-	private String email = "";
-	private String address= "";
-	//TODO: @Phone annotation
-    @Column(length = 10)
+	private String fullName = "";
+	//private String password = "";
+	//private String userName = "";
+	//@Email
+	//private String email = "";
+	private String address = "";
+	
+	@OneToOne(optional=false)
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@Column(length = 10)
 	private String phoneNumber;
 
-
 	/**
-	 * @param custID id of the customer
+	 * @param custID   id of the customer
 	 * @param custName given name of the customer. "" by default
-	 * @param fullname  customer fullname for login
-	 * @param password  password for customer account
-	 * @param email a email to identify a customer or fullname. cant be null
-	 * @param address customer addr. Empty String if unknown
+	 * @param fullname customer fullname for login
+	 * @param password password for customer account
+	 * @param email    a email to identify a customer or fullname. cant be null
+	 * @param address  customer addr. Empty String if unknown
 	 */
-	
-//Constructors 
-	public Customer(String userName, String password, String fullName, String email, String address, String phoneNumber) {
+
+	// Constructors
+	public Customer(){}
+
+
+public Customer(String userName, String password, String fullName, String email, String address,
+			String phoneNumber) {
 		this.userName = userName;
 		this.password = password;
 		this.fullName = fullName;
 		this.email = email;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-	}
-	
-	public Customer() {}
+	} 
+
+	public Customer(String fullName, String address, String phoneNumber) {
+	super();
+	this.fullName = fullName;
+	this.address = address;
+	this.phoneNumber = phoneNumber;
+    }
 	
 	public synchronized Set<Account> getAccounts() {
 		return this.accounts;
@@ -142,6 +149,14 @@ public class Customer implements Serializable {
 
 	public synchronized String getUserName() {
 		return userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public synchronized void setUserName(String userName) {
