@@ -47,16 +47,13 @@ public class Customer extends User {
 	@Column(updatable = false)
 	private Long custID;
 
-
-
-
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "cust_acct",  joinColumns = @JoinColumn(name = "custID"), inverseJoinColumns = @JoinColumn(name = "acctID"))
 	@JsonIgnore
 	private Set<Account> accounts = new HashSet<>();
 
 	private String fullName = "";
-	//private String password = "";
+	//private String password = "";     //Commented fields that would be in the User.
 	//private String userName = "";
 	//@Email
 	//private String email = "";

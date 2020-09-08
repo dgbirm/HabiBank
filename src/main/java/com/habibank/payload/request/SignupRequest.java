@@ -19,6 +19,10 @@ public class SignupRequest {
 
     private Set<String> role;
 
+    @NotBlank
+    @Size(min = 6, max = 40)
+    private String password;
+    
     /**
      * @return String return the username
      */
@@ -47,6 +51,20 @@ public class SignupRequest {
         this.email = email;
     }
 
+     /**
+     * @return String return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     /**
      * @return Set<String> return the role
      */
@@ -60,5 +78,8 @@ public class SignupRequest {
     public void setRole(Set<String> role) {
         this.role = role;
     }
+
+
+   
 
 }

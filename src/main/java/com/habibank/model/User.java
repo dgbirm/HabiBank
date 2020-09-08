@@ -10,7 +10,9 @@ import javax.validation.constraints.Size;
 
 /**
  * two main models for Authentication (User) & Authorization (Role). 
- * They have a many-to-many relationship.
+ * They have a one to one. like one customer has one user parent class
+ * 
+ * A user can have many roles or access levels
 
     User: id, username, email, password, roles
     Role: id, name

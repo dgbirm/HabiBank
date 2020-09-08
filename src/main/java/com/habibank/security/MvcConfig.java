@@ -1,10 +1,7 @@
-@EnableWebMvc
-    @Configuration
-    
-    /**
-	//  * not completely sure if this file is needed
+/* not completely sure if this file is needed
      * Set Spring configuration to serve the static resources of our React app
-     */
+    @EnableWebMvc
+    @Configuration
 	public class MvcConfig extends WebMvcConfigurerAdapter {
 	 
 	    @Override
@@ -24,4 +21,5 @@
 	          .addResourceLocations("/src/main/web-app/build/index.html");
         }
         
-	}
+	}	
+*/	

@@ -6,9 +6,11 @@ import javax.persistence.*;
 Model for Authorization
  */ 
 public class Role {
-    
+	
+	
+	//should i make a user role or just customer
     public enum ERole {
-        ROLE_CUSTOMER,
+        ROLE_CUSTOMER, 
         ROLE_ADMIN
     }
 

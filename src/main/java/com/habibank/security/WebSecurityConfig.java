@@ -30,8 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   UserDetailsServiceImpl userDetailsService;
-
-
+  
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
 
@@ -68,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .and()
 
           .formLogin().loginPage("/index.html")
-          .loginProcessingUrl("/perform_login")
+          .loginProcessingUrl("/perform_login") // Changed to login page 
           .defaultSuccessUrl("/homepage.html",true) //
           .failureUrl("/index.html?error=true");
           //...

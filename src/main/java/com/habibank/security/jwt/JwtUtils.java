@@ -23,7 +23,7 @@ public class JwtUtils {
 	
 	@Value("${habibank.app.jwtSecret}")
 	private String jwtSecret;
-	@Value("${habibank.app.jwtExpirationMs}")
+	@Value("${habibank.app.jwtExpiration}")
 	private int jwtExpirationMs;
 
 	/***
