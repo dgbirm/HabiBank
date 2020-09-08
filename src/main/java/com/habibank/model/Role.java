@@ -2,6 +2,9 @@ package com.habibank.model;
 import javax.persistence.*;
 @Entity
 @Table(name = "roles")
+/**
+Model for Authorization
+ */ 
 public class Role {
     
     public enum ERole {

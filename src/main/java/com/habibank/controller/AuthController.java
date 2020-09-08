@@ -2,6 +2,9 @@ package com.habibank.controller;
 
 import javax.validation.Valid;
 
+import com.habibank.payload.request.LoginRequest;
+import com.habibank.payload.request.SignupRequest;
+import com.habibank.payload.response.MessageResponse;
 import com.habibank.repo.CustomerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import io.jsonwebtoken.Jwts;
 
 /**
  * Controller for handling login/logout logic of front end
@@ -41,15 +43,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateCustomer(@Valid @RequestBody final LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateCustomer(@Valid @RequestBody LoginRequest loginRequest) {
 
-        final Authentication authentication = AuthenticationManager.authenticate(
+         Authentication authentication = AuthenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 	}
 
 
     @PostMapping("/signup")
-	public ResponseEntity<?> registerCustomer(@Valid @RequestBody final SignupRequest signUpRequest) {
+	public ResponseEntity<?> registerCustomer(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (CustomerRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()

@@ -8,12 +8,23 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 
+/**
+ * two main models for Authentication (User) & Authorization (Role). 
+ * They have a many-to-many relationship.
+
+    User: id, username, email, password, roles
+    Role: id, name
+ */
+
 @Entity
 @Table(	name = "users", 
 		uniqueConstraints = { 
 			@UniqueConstraint(columnNames = "username"),
 			@UniqueConstraint(columnNames = "email") 
 		})
+/***
+ * Model for Authenication
+ * */ 
 public class User {
 	@Id
 	@Column(name = "user_id", nullable = false)
