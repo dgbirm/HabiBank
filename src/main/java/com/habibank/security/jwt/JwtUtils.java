@@ -42,9 +42,9 @@ public class JwtUtils {
 		.compact();
 	}
 	/***
-	 * Method for getting the 
-	 * @param token
-	 * @return
+	 * Method for getting the username/principal from JWT web token  
+	 * @param token String representation of the token
+	 * @return The serialized JSON Web Signature string that has been cryptographically signed with key and encrpytion algorithm
 	 */
 	public String getUserNameFromJwtToken(String token){
 		return Jwts.parser()
@@ -54,38 +54,33 @@ public class JwtUtils {
 		.getSubject();
 	}
 
-	//TODO
-	public boolean validateJwtToken(String jwt) {
-		return null;
+	/**
+	 * Method for checking if the Jwt token is valid, invalid, or expired.
+	 * @param authToken JWT as a String 
+	 * @return true if parser does not throw an exception,
+	 *  otherwise logger returns an exception and false  
+	 */
+	public boolean validateJwtToken(String authToken) {
+
+		try {
+			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+			return true;
+		} catch(SignatureException e) {
+			logger.error("Invalid JWT signature: {}", e.getMessage());
+		}
+		catch(MalformedJwtException e) {
+			logger.error("Invalid JWT Token: {}", e.getMessage());
+		}
+		catch(ExpiredJwtException e) {
+			logger.error("JWT token is expired: {}", e.getMessage());
+		}
+		catch(UnsupportedJwtException e) {
+			logger.error("JWT token is unsupported: {}", e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			logger.error("JWT claims string is empty: {}", e.getMessage());
+		}
+		return false;
 	}
-
-
-    /**
-     * @return String return the jwtSecret
-     */
-    public String getJwtSecret() {
-        return jwtSecret;
-    }
-
-    /**
-     * @param jwtSecret the jwtSecret to set
-     */
-    public void setJwtSecret(String jwtSecret) {
-        this.jwtSecret = jwtSecret;
-    }
-
-    /**
-     * @return int return the jwtExpirationMs
-     */
-    public int getJwtExpirationMs() {
-        return jwtExpirationMs;
-    }
-
-    /**
-     * @param jwtExpirationMs the jwtExpirationMs to set
-     */
-    public void setJwtExpirationMs(int jwtExpirationMs) {
-        this.jwtExpirationMs = jwtExpirationMs;
-    }
 
 }

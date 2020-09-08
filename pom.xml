@@ -23,6 +23,13 @@
 		<frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
 	</properties>
 	<dependencies>
+	<!--Dependency for FilterChain for resolving JDK 14 compatibility-->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
