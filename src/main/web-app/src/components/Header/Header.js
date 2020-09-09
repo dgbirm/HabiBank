@@ -5,19 +5,21 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 /**
  * Universal header when the user is logged in
  */
-const Header = () => {
+const Header = (props) => {
   // temp data
   let loggedIn = true;
-  let first = "Jane";
-  let last = "Doe";
 
   const renderName = (status) => {
-    let name = status ? `${first} ${last}` : "Guest";
-    return (
-      <Navbar.Text>
-        Welcome, <span className="navbar-name">{name}</span>
-      </Navbar.Text>
-    );
+    const { userLoaded } = props;
+    if (userLoaded) {
+      const { fullName } = props;
+      let name = status ? fullName : "Guest";
+      return (
+        <Navbar.Text>
+          Welcome, <span className="navbar-name">{name}</span>
+        </Navbar.Text>
+      );
+    }
   };
 
   const renderLinks = (status) => {
@@ -25,10 +27,12 @@ const Header = () => {
       return (
         <Nav>
           <Nav.Link href="/home">Home</Nav.Link>
-          <NavDropdown title="Settings" id="collasible-nav-dropdown">
+          <Nav.Link href="/profile">Profile</Nav.Link>
+          <Nav.Link href="/logout">Log Out</Nav.Link>
+          {/* <NavDropdown title="Settings" id="collasible-nav-dropdown">
             <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             <NavDropdown.Item href="/logout">Log out</NavDropdown.Item>
-          </NavDropdown>
+          </NavDropdown> */}
         </Nav>
       );
     } else {
@@ -52,9 +56,12 @@ const Header = () => {
   );
 };
 
-// export default BankAccountWrapper;
 const mapStateToProps = (state) => {
-  return {};
+  const { customer } = state;
+  return {
+    fullName: customer.fullName,
+    userLoaded: customer.userLoaded,
+  };
 };
 
 const mapDispatchToProps = {};

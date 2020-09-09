@@ -10,20 +10,16 @@ const initialState = {
   address: "",
   phoneNumber: "",
   customerID: 0,
+  userLoaded: false,
 };
 
 function customerReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_SINGLE_CUSTOMER:
-      // return {
-      //   ...state,
       return Object.assign({}, state, {
-        userName: action.userName,
-        fullName: action.fullName,
-        email: action.email,
-        address: action.address,
-        phoneNumber: action.phoneNumber,
-        customerID: action.customerID,
+        ...state,
+        ...action.payload,
+        userLoaded: true,
       });
     default:
       return state;
