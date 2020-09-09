@@ -10,7 +10,7 @@ import { withRouter } from "react-router-dom";
 const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(props);
+    // console.log(props);
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
     props.history.push("/home");

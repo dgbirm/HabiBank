@@ -10,7 +10,7 @@ const initialState = {
   address: "Disneyland, CA",
   phoneNumber: "1234567890",
   customerID: 1,
-  userLoaded: false,
+  userLoaded: true, //false, // currently hard coded
 };
 
 function customerReducer(state = initialState, action) {

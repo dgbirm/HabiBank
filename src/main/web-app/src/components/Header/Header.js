@@ -3,6 +3,8 @@ import "./Header.css";
 import { connect } from "react-redux";
 import { Navbar, Nav } from "react-bootstrap";
 import { updateLogInStatus } from "../../redux/actions/auth";
+import { withRouter } from "react-router-dom";
+
 /**
  * Universal header when the user is logged in
  */
@@ -24,13 +26,25 @@ const Header = (props) => {
     props.updateLogInStatus(!loggedIn);
   };
 
+  const handleProfile = () => {
+    props.history.push("/profile");
+  };
+
+  const handleHome = () => {
+    props.history.push("/home");
+  };
+
   const renderLinks = () => {
     const { loggedIn } = props;
     if (loggedIn) {
       return (
         <Nav>
-          <Nav.Link href="/home">Home</Nav.Link>
-          <Nav.Link href="/profile">Profile</Nav.Link>
+          <Nav.Link href="" onClick={handleHome}>
+            Home
+          </Nav.Link>
+          <Nav.Link href="" onClick={handleProfile}>
+            Profile
+          </Nav.Link>
           <Nav.Link href="/logout" onClick={handleLogOut}>
             Log out
           </Nav.Link>
@@ -67,4 +81,4 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = { updateLogInStatus };
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
