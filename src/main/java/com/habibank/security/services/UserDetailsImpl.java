@@ -1,14 +1,10 @@
 package com.habibank.security.services;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.habibank.model.User;
 
@@ -29,34 +25,34 @@ public class UserDetailsImpl implements UserDetails {
 	@JsonIgnore
 	private String password;
 
-	private Collection<? extends GrantedAuthority> authorities;
+	//private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String username, String email, String password,
-			Collection<? extends GrantedAuthority> authorities) {
+	public UserDetailsImpl(Long id, String username, String email, String password
+			/*,Collection<? extends GrantedAuthority> authorities*/) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.authorities = authorities;
+		//this.authorities = authorities;
 	}
 
-	public static UserDetailsImpl build(User user) {
+	public static UserDetailsImpl build(User user) {/* 
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
-				.collect(Collectors.toList());
+				.collect(Collectors.toList()); */
 
 		return new UserDetailsImpl(
-				user.getId(), 
-				user.getUsername(), 
+				user.getUserID(), 
+				user.getUserName(), 
 				user.getEmail(),
-				user.getPassword(), 
-				authorities);
+				user.getPassword()
+				/*, authorities*/);
 	}
 
-	@Override
+/* 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
-	}
+	} */
 
 	public Long getId() {
 		return id;
@@ -104,5 +100,12 @@ public class UserDetailsImpl implements UserDetails {
 			return false;
 		UserDetailsImpl user = (UserDetailsImpl) o;
 		return Objects.equals(id, user.id);
+	}
+
+	//Had to include getAuthorities()
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

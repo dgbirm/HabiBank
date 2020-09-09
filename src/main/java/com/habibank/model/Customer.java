@@ -25,6 +25,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -54,13 +55,24 @@ public class Customer implements Serializable {
 	private Set<Account> accounts = new HashSet<>();
 
 	private String fullName = "";
+	@OneToOne(targetEntity = User.class)
 	private String userName = "";
+	
+	@OneToOne(targetEntity = User.class)
 	@Email
 	private String email = "";
+	
 	private String address = "";
 
 	@Column(length = 10)
 	private String phoneNumber;
+
+	@Transient
+	private Enum accessLevel = Role.ERole.ROLE_CUSTOMER;
+	
+	@OneToOne(mappedBy = "cust")
+	private User usr;
+	
 
 	/**
 	 * @param custID   id of the customer
@@ -74,8 +86,7 @@ public class Customer implements Serializable {
 	// Constructors
 	public Customer(){}
 
-
-public Customer(String userName, String fullName, String email, String address,
+	public Customer(String userName, String fullName, String email, String address,
 			String phoneNumber) {
 		this.userName = userName;
 		this.fullName = fullName;
@@ -170,10 +181,6 @@ public Customer(String userName, String fullName, String email, String address,
 	public synchronized void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
 
-//getterSetters
-	
-	
 
 }

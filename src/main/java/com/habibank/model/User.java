@@ -1,83 +1,95 @@
 package com.habibank.model;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.io.Serializable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.habibank.repo.CustomerRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * two main models for Authentication (User) & Authorization (Role). 
- * They have a one to one. like one customer has one user parent class
+ * two main models for Authentication (User) & Authorization (Role). They have a
+ * one to one. like one customer has one user parent class
  * 
  * A user can have many roles or access levels
-
-    User: id, username, email, password, roles
-    Role: id, name
+ * 
+ * User: id, username, email, password, roles Role: id, name
  */
 
 @Entity
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
+@Table(name = "users")
 /***
- * Model for Authenication
- * */ 
-public class User {
+ * Model for Authenication. Contains info pertinant to authentication
+ */
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1125610460833462892L;
+
+	@Transient
+	@Autowired
+	private CustomerRepository custRepo;
+
+
+	//Changed this line trying to fix the error but got more errors
 	@Id
-	@Column(name = "user_id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long custID;
+	
+	@OneToOne
+	@JoinColumn(name = "custID")
+	@MapsId
+	private Customer cust;
+	
+	
+	//TODO: Check with truelove about these annotations
+	private String userName;
 
-	@NotBlank
-	@Size(max = 20)
-	protected String userName;
+	private String email;
 
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	protected String email;
-
-	@NotBlank
 	@Size(max = 120)
-	protected String password;    
+	private String password;   
 
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(	name = "user_roles", 
-//				joinColumns = @JoinColumn(name = "user_id"), 
-//				inverseJoinColumns = @JoinColumn(name = "role_id"))
-//	private Set<Role> roles = new HashSet<>();
+	/* @ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>(); */
 
-	public User() {
+	public User() {}
+
+	public User(Long custID, String password) {
+		this.custID = custID;
+		this.userName = this.custRepo.findById(custID).get().getUserName();
+		this.email = this.custRepo.findById(custID).get().getEmail();
+		this.password = password; //want to at some point store hash of password?
+	
+	}
+	
+//toString
+	@Override
+	public String toString() {
+		return "User [custID=" + custID + ", userName=" + userName + ", email=" + email + "]";
 	}
 
-	public User(String userName, String email, String password) {
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
+	public synchronized Long getCustID() {
+		return custID;
 	}
 
-	public Long getId() {
-		return id;
+	public synchronized void setCustID(Long custID) {
+		this.custID = custID;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
+	public synchronized String getUserName() {
 		return userName;
 	}
 
-	public void setUsername(String username) {
+	public synchronized void setUserName(String username) {
 		this.userName = username;
 	}
 
-	public String getEmail() {
+	public synchronized String getEmail() {
 		return email;
 	}
 

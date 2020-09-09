@@ -39,10 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new AuthTokenFilter();
   }
 
-  @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-    authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-  }
+
   
   @Bean
 	@Override
@@ -55,6 +52,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+  @Override
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    
+    //For testing 
+    auth.inMemoryAuthentication()
+    .withUser("cj")
+    .password("password")
+    .roles("USER");
+  }
+
 
     @Override
     protected void configure( HttpSecurity http) 
@@ -62,7 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+        .authorizeRequests().antMatchers("/auth/**").permitAll()
+              
+        //.antMatchers("/api/car/{id}").hasRole("USER")
+
           .anyRequest().authenticated()
           .and()
 
