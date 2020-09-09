@@ -44,17 +44,13 @@ public class User {
 
 	@NotBlank
 	@Size(max = 120)
-	protected String password;
+	protected String password;    
 
-	@OneToOne(optional=false,cascade=CascadeType.ALL, 
-	mappedBy="order",targetEntity=Customer.class)
-	private Customer customer;       
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(	name = "user_roles", 
+//				joinColumns = @JoinColumn(name = "user_id"), 
+//				inverseJoinColumns = @JoinColumn(name = "role_id"))
+//	private Set<Role> roles = new HashSet<>();
 
 	public User() {
 	}
@@ -96,13 +92,5 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-    }
     
 }

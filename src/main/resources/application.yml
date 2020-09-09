@@ -27,5 +27,5 @@ spring:
 # JWT properties
 habibank:
     app:
-        jwtSecret = habibSecretKey
-        jwtExpiration = 84600000
+        jwtSecret: habibSecretKey
+        jwtExpiration: 84600000

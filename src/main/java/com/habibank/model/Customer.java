@@ -9,6 +9,7 @@
  */
 package com.habibank.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -35,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "customer")
-public class Customer extends User {
+public class Customer implements Serializable {
 
 	// Thought:
 	// TODO Should we add a password property for a customer to login? for login
@@ -53,15 +54,10 @@ public class Customer extends User {
 	private Set<Account> accounts = new HashSet<>();
 
 	private String fullName = "";
-	//private String password = "";     //Commented fields that would be in the User.
-	//private String userName = "";
-	//@Email
-	//private String email = "";
+	private String userName = "";
+	@Email
+	private String email = "";
 	private String address = "";
-	
-	@OneToOne(optional=false)
-	@JoinColumn(name = "user_id")
-	private User user;
 
 	@Column(length = 10)
 	private String phoneNumber;
@@ -79,22 +75,14 @@ public class Customer extends User {
 	public Customer(){}
 
 
-public Customer(String userName, String password, String fullName, String email, String address,
+public Customer(String userName, String fullName, String email, String address,
 			String phoneNumber) {
 		this.userName = userName;
-		this.password = password;
 		this.fullName = fullName;
 		this.email = email;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 	} 
-
-	public Customer(String fullName, String address, String phoneNumber) {
-	super();
-	this.fullName = fullName;
-	this.address = address;
-	this.phoneNumber = phoneNumber;
-    }
 	
 	public synchronized Set<Account> getAccounts() {
 		return this.accounts;
@@ -145,14 +133,6 @@ public Customer(String userName, String password, String fullName, String email,
 
 	public synchronized String getUserName() {
 		return userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public synchronized void setUserName(String userName) {
