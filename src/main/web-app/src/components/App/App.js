@@ -7,6 +7,7 @@ import {
   fetchAccounts,
   fetchTransactions,
 } from "../../redux/actions/baseData";
+import { fetchCustomer } from "../../redux/actions/customer";
 
 const App = (props) => {
   // temporary feature - loads all db data into redux store
@@ -14,6 +15,7 @@ const App = (props) => {
     await props.fetchCustomers();
     await props.fetchAccounts();
     await props.fetchTransactions();
+    await props.fetchCustomer();
   }
   useEffect(() => {
     loadAll();
@@ -36,5 +38,10 @@ const mapStateToProps = (state) => {
   return {};
 };
 
-const mapDispatchToProps = { fetchCustomers, fetchAccounts, fetchTransactions };
+const mapDispatchToProps = {
+  fetchCustomers,
+  fetchAccounts,
+  fetchTransactions,
+  fetchCustomer,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(App);
