@@ -1,44 +1,45 @@
 import React from "react";
 import "./Header.css";
 import { connect } from "react-redux";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
+import { updateLogInStatus } from "../../redux/actions/auth";
 /**
  * Universal header when the user is logged in
  */
 const Header = (props) => {
-  // temp data
-  let loggedIn = true;
+  const renderName = () => {
+    const { userLoaded, loggedIn, fullName } = props;
+    // userloaded check
+    let name = loggedIn ? fullName : "Guest";
 
-  const renderName = (status) => {
-    const { userLoaded } = props;
-    if (userLoaded) {
-      const { fullName } = props;
-      let name = status ? fullName : "Guest";
-      return (
-        <Navbar.Text>
-          Welcome, <span className="navbar-name">{name}</span>
-        </Navbar.Text>
-      );
-    }
+    return (
+      <Navbar.Text>
+        Welcome, <span className="navbar-name">{name}</span>
+      </Navbar.Text>
+    );
   };
 
-  const renderLinks = (status) => {
-    if (status) {
+  const handleLogOut = () => {
+    const { loggedIn } = props;
+    props.updateLogInStatus(!loggedIn);
+  };
+
+  const renderLinks = () => {
+    const { loggedIn } = props;
+    if (loggedIn) {
       return (
         <Nav>
           <Nav.Link href="/home">Home</Nav.Link>
           <Nav.Link href="/profile">Profile</Nav.Link>
-          <Nav.Link href="/logout">Log Out</Nav.Link>
-          {/* <NavDropdown title="Settings" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-            <NavDropdown.Item href="/logout">Log out</NavDropdown.Item>
-          </NavDropdown> */}
+          <Nav.Link href="/logout" onClick={handleLogOut}>
+            Log out
+          </Nav.Link>
         </Nav>
       );
     } else {
       return (
         <Nav>
-          <Nav.Link href="/">Log In</Nav.Link>
+          <Nav.Link href="/">Log in</Nav.Link>
         </Nav>
       );
     }
@@ -47,9 +48,9 @@ const Header = (props) => {
   return (
     <div>
       <Navbar bg="primary" variant="dark">
-        {renderName(loggedIn)}
+        {renderName()}
         <Navbar.Collapse className="justify-content-end">
-          {renderLinks(loggedIn)}
+          {renderLinks()}
         </Navbar.Collapse>
       </Navbar>
     </div>
@@ -57,12 +58,13 @@ const Header = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { customer } = state;
+  const { customer, auth } = state;
   return {
     fullName: customer.fullName,
     userLoaded: customer.userLoaded,
+    loggedIn: auth.loggedIn,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { updateLogInStatus };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

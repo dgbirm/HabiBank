@@ -2,12 +2,18 @@ import React from "react";
 import "./Login.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
+import { updateLogInStatus } from "../../redux/actions/auth";
+import { withRouter } from "react-router-dom";
 
 // putting fetch actions here for now
 // const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
-const Login = () => {
+const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(props);
+    const { loggedIn } = props;
+    props.updateLogInStatus(!loggedIn);
+    props.history.push("/home");
   };
   return (
     <div>
@@ -32,8 +38,9 @@ const Login = () => {
 
 // export default Login;
 const mapStateToProps = (state) => {
-  return {};
+  const { auth } = state;
+  return { loggedIn: auth.loggedIn };
 };
 
-const mapDispatchToProps = {};
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+const mapDispatchToProps = { updateLogInStatus };
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
