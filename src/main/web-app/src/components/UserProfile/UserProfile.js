@@ -11,7 +11,7 @@ const UserProfile = () => {
   const renderProfileImage = () => {
     return (
       <div className="profileImage">
-        <img src={userIcon} alt="default user icon image" />
+        <img src={userIcon} alt="" />
       </div>
     );
   };
