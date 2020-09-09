@@ -24,6 +24,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "customer")
-public class Customer extends User {
+public class Customer {
 
 	// Thought:
 	// TODO Should we add a password property for a customer to login? for login
@@ -54,9 +55,9 @@ public class Customer extends User {
 
 	private String fullName = "";
 	//private String password = "";     //Commented fields that would be in the User.
-	//private String userName = "";
-	//@Email
-	//private String email = "";
+	private String userName = "";
+	@Email
+	private String email = "";
 	private String address = "";
 	
 	@OneToOne(optional=false)
@@ -65,6 +66,9 @@ public class Customer extends User {
 
 	@Column(length = 10)
 	private String phoneNumber;
+
+	@Transient
+	private Enum  accessLevel = Role.ERole.ROLE_CUSTOMER;
 
 	/**
 	 * @param custID   id of the customer
@@ -78,23 +82,14 @@ public class Customer extends User {
 	// Constructors
 	public Customer(){}
 
-
-public Customer(String userName, String password, String fullName, String email, String address,
+public Customer(String userName, String fullName, String email, String address,
 			String phoneNumber) {
 		this.userName = userName;
-		this.password = password;
 		this.fullName = fullName;
 		this.email = email;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 	} 
-
-	public Customer(String fullName, String address, String phoneNumber) {
-	super();
-	this.fullName = fullName;
-	this.address = address;
-	this.phoneNumber = phoneNumber;
-    }
 	
 	public synchronized Set<Account> getAccounts() {
 		return this.accounts;
@@ -147,13 +142,13 @@ public Customer(String userName, String password, String fullName, String email,
 		return userName;
 	}
 
-	public String getPassword() {
+	/* public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
+	} */
 
 	public synchronized void setUserName(String userName) {
 		this.userName = userName;

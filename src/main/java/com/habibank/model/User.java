@@ -1,4 +1,5 @@
 package com.habibank.model;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,70 +8,67 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.habibank.repo.CustomerRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * two main models for Authentication (User) & Authorization (Role). 
- * They have a one to one. like one customer has one user parent class
+ * two main models for Authentication (User) & Authorization (Role). They have a
+ * one to one. like one customer has one user parent class
  * 
  * A user can have many roles or access levels
-
-    User: id, username, email, password, roles
-    Role: id, name
+ * 
+ * User: id, username, email, password, roles Role: id, name
  */
 
 @Entity
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
+@Table(name = "users")
 /***
- * Model for Authenication
- * */ 
+ * Model for Authenication. Contains info pertinant to authentication
+ */
 public class User {
+
+	@Autowired
+	private CustomerRepository custRepo;
+
+
+	//Changed this line trying to fix the error but got more errors
 	@Id
-	@Column(name = "user_id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "custID" /*,nullable=false*/)
+	//@Column(updatable = false)
+	private long userID;
 
-	@NotBlank
-	@Size(max = 20)
-	protected String userName;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userName")
+	private String userName;
 
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	protected String email;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "email")
+	private String email;
 
 	@NotBlank
 	@Size(max = 120)
-	protected String password;
+	private String password;   
 
-	@OneToOne(optional=false,cascade=CascadeType.ALL, 
-	mappedBy="order",targetEntity=Customer.class)
-	private Customer customer;       
-
-	@ManyToMany(fetch = FetchType.LAZY)
+	/* @ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+	private Set<Role> roles = new HashSet<>(); */
 
-	public User() {
+	public User() {}
+
+	public User(Long userID, String password) {
+		this.userID = userID;
+		this.userName = this.custRepo.findById(this.userID).get().getUserName();
+		this.email = this.custRepo.findById(this.userID).get().getEmail();
+		this.password = password; //want to at some point store hash of password?
+	
 	}
 
-	public User(String userName, String email, String password) {
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Long getUserID() {
+		return userID;
 	}
 
 	public String getUsername() {
@@ -96,13 +94,5 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-    }
     
 }

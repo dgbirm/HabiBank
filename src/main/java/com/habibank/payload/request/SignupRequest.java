@@ -4,8 +4,15 @@ import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.habibank.repo.CustomerRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.validation.constraints.Email;
 
+
+//TODO:
 public class SignupRequest {
 
     @NotBlank
@@ -17,12 +24,38 @@ public class SignupRequest {
     @Email
     private String email;
 
-    private Set<String> role;
-
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    	
+	@Autowired
+	private CustomerRepository custRepo;
+
+	@NotBlank
+    private long userId;
     
+
+
+    public Long getUserID() {
+		return userId;
+	}
+    
+    /**
+     * @return long return the userId
+     */
+    public long getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+
     /**
      * @return String return the username
      */
@@ -34,7 +67,7 @@ public class SignupRequest {
      * @param username the username to set
      */
     public void setUsername(String username) {
-        this.username = username;
+        this.username = this.custRepo.findById(this.userId).get().getUserName();
     }
 
     /**
@@ -48,7 +81,7 @@ public class SignupRequest {
      * @param email the email to set
      */
     public void setEmail(String email) {
-        this.email = email;
+        this.email = this.custRepo.findById(this.userId).get().getEmail();
     }
 
      /**
@@ -63,23 +96,6 @@ public class SignupRequest {
      */
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * @return Set<String> return the role
-     */
-    public Set<String> getRole() {
-        return role;
-    }
-
-    /**
-     * @param role the role to set
-     */
-    public void setRole(Set<String> role) {
-        this.role = role;
-    }
-
-
-   
+    }    
 
 }

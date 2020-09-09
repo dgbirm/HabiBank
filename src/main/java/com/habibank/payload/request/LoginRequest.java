@@ -2,12 +2,19 @@ package com.habibank.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
+import com.habibank.repo.CustomerRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 /*** part of the POJO classes for the Restful API service  
  * Payload class for 
  * LoginRequest -> username, password
  */
 public class LoginRequest {
-    @NotBlank
+	
+	
+
+	@NotBlank
 	private String username;
 
 	@NotBlank

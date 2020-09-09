@@ -14,6 +14,7 @@ import com.habibank.payload.request.SignupRequest;
 import com.habibank.payload.response.JwtResponse;
 import com.habibank.payload.response.MessageResponse;
 import com.habibank.repo.RoleRepository;
+import com.habibank.repo.CustomerRepository;
 import com.habibank.repo.UserRepository;
 import com.habibank.security.jwt.JwtUtils;
 import com.habibank.security.services.UserDetailsImpl;
@@ -44,7 +45,9 @@ public class AuthController {
     @Autowired
     AuthenticationManager authManager;
     @Autowired
-	RoleRepository roleRepo;
+    RoleRepository roleRepo;
+    @Autowired
+    CustomerRepository custRepo;
     @Autowired
     UserRepository userRepo; 
     @Autowired
@@ -96,9 +99,11 @@ public class AuthController {
                         .body(new MessageResponse("Error: Email is already in use!"));
             }
             //Create new users account
-            User user = new User(signUpRequest.getUsername(),signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));//encode/encrypt raw password
-
+            //Get by customer ID in payload (request, response)
+            User user = new User(/* signUpRequest.getUsername(),
+                    signUpRequest.getEmail(), */signUpRequest.getUserId(),
+                    encoder.encode(signUpRequest.getPassword()));//encode/encrypt raw password
+/* 
             //list of user roles
             //Set the role for the user (customer or admin) 
             Set<String> strRoles = signUpRequest.getRole();
@@ -122,7 +127,7 @@ public class AuthController {
                     });
             }
 
-            user.setRoles(roles);
+            user.setRoles(roles); */
             userRepo.save(user);
             
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

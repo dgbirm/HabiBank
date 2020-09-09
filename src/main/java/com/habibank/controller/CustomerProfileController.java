@@ -30,5 +30,7 @@ public class CustomerProfileController{
     
 	//get all transactions by customer id
 
+	//display balance
+
 
 }
