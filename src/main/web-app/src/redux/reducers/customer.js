@@ -4,12 +4,12 @@ import { LOAD_SINGLE_CUSTOMER } from "../actions/actionTypes";
  */
 
 const initialState = {
-  userName: "",
-  fullName: "",
-  email: "",
-  address: "",
-  phoneNumber: "",
-  customerID: 0,
+  userName: "jdoe",
+  fullName: "Jane Doe",
+  email: "jd@doeeee.com",
+  address: "Disneyland, CA",
+  phoneNumber: "1234567890",
+  customerID: 1,
   userLoaded: false,
 };
 
