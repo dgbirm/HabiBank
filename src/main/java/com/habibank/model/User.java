@@ -1,10 +1,8 @@
 package com.habibank.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -26,28 +24,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 /***
  * Model for Authenication. Contains info pertinant to authentication
  */
-public class User {
+public class User implements Serializable{
 
+	private static final long serialVersionUID = 1125610460833462892L;
+
+	@Transient
 	@Autowired
 	private CustomerRepository custRepo;
 
 
 	//Changed this line trying to fix the error but got more errors
 	@Id
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "custID" /*,nullable=false*/)
-	//@Column(updatable = false)
-	private long userID;
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userName")
+	private Long custID;
+	
+	@OneToOne
+	@JoinColumn(name = "custID")
+	@MapsId
+	private Customer cust;
+	
+	
+	//TODO: Check with truelove about these annotations
 	private String userName;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "email")
 	private String email;
 
-	@NotBlank
 	@Size(max = 120)
 	private String password;   
 
@@ -59,27 +59,37 @@ public class User {
 
 	public User() {}
 
-	public User(Long userID, String password) {
-		this.userID = userID;
-		this.userName = this.custRepo.findById(this.userID).get().getUserName();
-		this.email = this.custRepo.findById(this.userID).get().getEmail();
+	public User(Long custID, String password) {
+		this.custID = custID;
+		this.userName = this.custRepo.findById(custID).get().getUserName();
+		this.email = this.custRepo.findById(custID).get().getEmail();
 		this.password = password; //want to at some point store hash of password?
 	
 	}
-
-	public Long getUserID() {
-		return userID;
+	
+//toString
+	@Override
+	public String toString() {
+		return "User [custID=" + custID + ", userName=" + userName + ", email=" + email + "]";
 	}
 
-	public String getUsername() {
+	public synchronized Long getCustID() {
+		return custID;
+	}
+
+	public synchronized void setCustID(Long custID) {
+		this.custID = custID;
+	}
+
+	public synchronized String getUserName() {
 		return userName;
 	}
 
-	public void setUsername(String username) {
+	public synchronized void setUserName(String username) {
 		this.userName = username;
 	}
 
-	public String getEmail() {
+	public synchronized String getEmail() {
 		return email;
 	}
 

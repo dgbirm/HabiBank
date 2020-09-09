@@ -7,5 +7,5 @@ import com.habibank.model.Customer;
 
 @RepositoryRestResource
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-
+	
 }

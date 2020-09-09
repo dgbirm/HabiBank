@@ -1,11 +1,9 @@
 package com.habibank.controller;
 
 import java.net.URI;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.habibank.model.Account;
 import com.habibank.model.Customer;
@@ -42,7 +41,6 @@ TransactionsRest
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-
 public class HabibankController {
 
 	//Inject 
@@ -53,20 +51,19 @@ public class HabibankController {
 	@Autowired
 	private TransactionRepository transRepo;
 
-
-	//Add constructor to add all the needed repositories
-
-	@RequestMapping(value = "/") //flag index to support root
-	private String index() {
-		return "index";
+	// should this be done on the front-end?
+	@RequestMapping(value = {
+		"index"
+	}) //flag '', '/', 'index' to support [react-app] index
+	private RedirectView index() {
+		return new RedirectView("");
 	}
 
 	//Get all customers or view all customers  
 	@GetMapping("api/customers")
-	public Iterable<Customer> getAllCustomers() {
-        return custRepo.findAll();
+	public Iterable<Customer> getAllCustomers(Pageable pg) {
+        return this.custRepo.findAll(pg);
 	}
-
 
 	//Get all accounts of one customer or view all accounts
 	@GetMapping("api/accounts")
@@ -74,13 +71,11 @@ public class HabibankController {
         return this.acctRepo.findAll(pg);
 	}
 	
-
 	//Get all transactions or view all transactions
 	@GetMapping("api/transactions")
-	private Page<Transaction> getAllTrans(Pageable pg) {
+	private Iterable<Transaction> getAllTrans(Pageable pg) {
         return this.transRepo.findAll(pg);
 	}
-	
 
 	//Get a specific account
 
@@ -90,14 +85,15 @@ public class HabibankController {
 
 
 
-	
-//	@PostMapping("api/employees")
-//	private ResponseEntity<?> createEmp(@RequestBody Account e) {
-//		Account createdAccount = new Account(
-//				e.getFullName(),e.getDep(),e.getJobTitle(), e.getYearlySalary());
-//		this.acctRepo.saveAndFlush(createdAccount);
-//		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdAccount.getEmpID()).toUri();
-//		return ResponseEntity.created(location).build();
-//	}
+//create customer	
+	@PostMapping("api/customers")
+	private ResponseEntity<?> createCust(@RequestBody Customer c) {
+		Customer createdCustomer = new Customer(
+				c.getUserName(),c.getFullName(),c.getEmail(),
+				c.getAddress(),c.getPhoneNumber());
+		this.custRepo.saveAndFlush(createdCustomer);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdCustomer.getCustomerID()).toUri();
+		return ResponseEntity.created(location).build();
+	}
 
 }

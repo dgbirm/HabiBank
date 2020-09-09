@@ -9,6 +9,7 @@
  */
 package com.habibank.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -36,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements Serializable {
 
 	// Thought:
 	// TODO Should we add a password property for a customer to login? for login
@@ -54,21 +55,24 @@ public class Customer {
 	private Set<Account> accounts = new HashSet<>();
 
 	private String fullName = "";
-	//private String password = "";     //Commented fields that would be in the User.
+	@OneToOne(targetEntity = User.class)
 	private String userName = "";
+	
+	@OneToOne(targetEntity = User.class)
 	@Email
 	private String email = "";
-	private String address = "";
 	
-	@OneToOne(optional=false)
-	@JoinColumn(name = "user_id")
-	private User user;
+	private String address = "";
 
 	@Column(length = 10)
 	private String phoneNumber;
 
 	@Transient
-	private Enum  accessLevel = Role.ERole.ROLE_CUSTOMER;
+	private Enum accessLevel = Role.ERole.ROLE_CUSTOMER;
+	
+	@OneToOne(mappedBy = "cust")
+	private User usr;
+	
 
 	/**
 	 * @param custID   id of the customer
@@ -82,7 +86,7 @@ public class Customer {
 	// Constructors
 	public Customer(){}
 
-public Customer(String userName, String fullName, String email, String address,
+	public Customer(String userName, String fullName, String email, String address,
 			String phoneNumber) {
 		this.userName = userName;
 		this.fullName = fullName;
@@ -142,14 +146,6 @@ public Customer(String userName, String fullName, String email, String address,
 		return userName;
 	}
 
-	/* public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	} */
-
 	public synchronized void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -185,10 +181,6 @@ public Customer(String userName, String fullName, String email, String address,
 	public synchronized void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
 
-//getterSetters
-	
-	
 
 }

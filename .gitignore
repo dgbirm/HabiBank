@@ -1,4 +1,10 @@
 ##############################
+## Project Specific
+##############################
+HabiBank.png
+HabiBankDump.sql
+ 
+##############################
 ## Eclipse
 ##############################
 .settings/
@@ -47,6 +53,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### VS ###
+.vs/
+
 # Compiled class file
 *.class
 
@@ -76,23 +85,23 @@ hs_err_pid*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-src/main/js/node_modules
-src/mian/js/.pnp
-src/main/js/.pnp.js
+src/main/web-app/node_modules
+src/mian/web-app/.pnp
+src/main/web-app/.pnp.js
 
 # testing
-src/main/js/coverage
+src/main/web-app/coverage
 
 # production
-src/main/js/build
+src/main/web-app/build
 
 # misc
-src/main/js/.DS_Store
-src/main/js/.env.local
-src/main/js/.env.development.local
-src/main/js/.env.test.local
-src/main/js/.env.production.local
+src/main/web-app/.DS_Store
+src/main/web-app/.env.local
+src/main/web-app/.env.development.local
+src/main/web-app/.env.test.local
+src/main/web-app/.env.production.local
 
-src/main/js/npm-debug.log*
-src/main/js/yarn-debug.log*
-src/main/js/yarn-error.log*
+src/main/web-app/npm-debug.log*
+src/main/web-app/yarn-debug.log*
+src/main/web-app/yarn-error.log*

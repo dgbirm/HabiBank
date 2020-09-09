@@ -32,7 +32,6 @@ public class SignupRequest {
 	@Autowired
 	private CustomerRepository custRepo;
 
-	@NotBlank
     private long userId;
     
 
