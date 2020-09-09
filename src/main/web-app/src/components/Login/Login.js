@@ -39,12 +39,7 @@ const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
 
 // export default Login;
 const mapStateToProps = (state) => {
-  const { loading } = state;
-  return {
-    customers: loading.customers,
-    accounts: loading.accounts,
-    transactions: loading.transactions,
-  };
+  return {};
 };
 
 const mapDispatchToProps = { fetchCustomers, fetchAccounts, fetchTransactions };
