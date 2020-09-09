@@ -20,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * The Class Transaction.
  */
@@ -30,7 +32,8 @@ public class Transaction {
 	@GeneratedValue
 	@Column(updatable = false)
 	private Long transactionID;
-	
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "acctID")
 	private Account acct;
