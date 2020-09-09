@@ -15,7 +15,7 @@ const Header = () => {
     let name = status ? `${first} ${last}` : "Guest";
     return (
       <Navbar.Text>
-        Welcome, <a>{name}</a>
+        Welcome, <span className="navbar-name">{name}</span>
       </Navbar.Text>
     );
   };
