@@ -2,11 +2,15 @@ import React from "react";
 import "./Login.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-
-const Login = () => {
+import { fetchCustomers } from "../../redux/actions/loading";
+const Login = ({ fetchCustomers }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchCustomers();
+  };
   return (
     <div>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" placeholder="Enter email" />
@@ -27,8 +31,9 @@ const Login = () => {
 
 // export default Login;
 const mapStateToProps = (state) => {
-  return {};
+  const { loading } = state;
+  return { data: loading.data };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { fetchCustomers };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
