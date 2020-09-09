@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HabiBankApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HabiBankApplication.class, args);
+		SpringApplication app = new SpringApplication(HabiBankApplication.class);
+		app.run(args);
 	}
-
+	
 }
