@@ -24,6 +24,7 @@ const Header = (props) => {
   const handleLogOut = () => {
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
+    props.history.push("/");
   };
 
   const handleProfile = () => {
@@ -45,7 +46,7 @@ const Header = (props) => {
           <Nav.Link href="" onClick={handleProfile}>
             Profile
           </Nav.Link>
-          <Nav.Link href="/logout" onClick={handleLogOut}>
+          <Nav.Link href="" onClick={handleLogOut}>
             Log out
           </Nav.Link>
         </Nav>
