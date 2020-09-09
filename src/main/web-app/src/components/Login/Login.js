@@ -2,11 +2,19 @@ import React from "react";
 import "./Login.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import { fetchCustomers } from "../../redux/actions/loading";
-const Login = ({ fetchCustomers }) => {
+import {
+  fetchCustomers,
+  fetchAccounts,
+  fetchTransactions,
+} from "../../redux/actions/baseData";
+
+// putting fetch actions here for now
+const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchCustomers();
+    fetchAccounts();
+    fetchTransactions();
   };
   return (
     <div>
@@ -32,8 +40,12 @@ const Login = ({ fetchCustomers }) => {
 // export default Login;
 const mapStateToProps = (state) => {
   const { loading } = state;
-  return { data: loading.data };
+  return {
+    customers: loading.customers,
+    accounts: loading.accounts,
+    transactions: loading.transactions,
+  };
 };
 
-const mapDispatchToProps = { fetchCustomers };
+const mapDispatchToProps = { fetchCustomers, fetchAccounts, fetchTransactions };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
