@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import App from "./components/App/App";
 import AccountHome from "./components/AccountHome/AccountHome";
 import BankAccountWrapper from "./components/BankAccountWrapper/BankAccountWrapper";
-import CreateBankAccount from "./components/CreateBankAccount/CreateBankAccount";
+// import CreateBankAccount from "./components/CreateBankAccount/CreateBankAccount";
 import Login from "./components/Login/Login";
 import RegisterUser from "./components/RegisterUser/RegisterUser";
 import Transaction from "./components/Transaction/Transaction";
@@ -29,10 +29,10 @@ const createRoutes = () => (
         path="/home"
         render={(...props) => <App ChildComponent={AccountHome} />}
       />
-      <Route
+      {/* <Route
         path="/newaccount"
         render={(...props) => <App ChildComponent={CreateBankAccount} />}
-      />
+      /> */}
       <Route
         path="/savings"
         render={(...props) => (
