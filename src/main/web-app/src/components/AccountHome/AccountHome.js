@@ -62,7 +62,9 @@ const AccountHome = (props) => {
 
     return (
       <Link to={link}>
-        <Button variant="primary">{text}</Button>
+        <Button variant="primary" className="shadowButton">
+          {text}
+        </Button>
       </Link>
     );
   };

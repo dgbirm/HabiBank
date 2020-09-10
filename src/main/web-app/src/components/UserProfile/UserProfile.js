@@ -23,11 +23,13 @@ const UserProfile = (props) => {
       const { profile } = props;
       const { fullName, address, email, phoneNumber } = profile;
       return (
-        <div>
-          <h3>{fullName}</h3>
-          <p>{address}</p>
-          <p>{email}</p>
-          <p>{phoneNumber}</p>
+        <div className="center">
+          <div>
+            <h3>{fullName}</h3>
+            <p>{address}</p>
+            <p>{email}</p>
+            <p>{phoneNumber}</p>
+          </div>
         </div>
       );
     }
@@ -42,7 +44,7 @@ const UserProfile = (props) => {
   //   );
   // };
   return (
-    <div>
+    <div className="form-wrapper">
       {renderProfileImage()}
       {renderProfileDetails()}
       {/* {renderEditProfile()} */}

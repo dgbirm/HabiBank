@@ -79,19 +79,19 @@ const BankAccountWrapper = (props) => {
     return (
       <div className="center transaction-buttons">
         <Link to="/deposit">
-          <Button variant="primary" className="tButton">
+          <Button variant="primary" className="tButton shadowButton">
             {DEPOSIT}
           </Button>
         </Link>
 
         <Link to="/withdraw">
-          <Button variant="primary" className="tButton">
+          <Button variant="primary" className="tButton shadowButton">
             {WITHDRAW}
           </Button>
         </Link>
 
         <Link to="/transfer">
-          <Button variant="primary" className="tButton">
+          <Button variant="primary" className="tButton shadowButton">
             {TRANSFER}
           </Button>
         </Link>
