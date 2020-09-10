@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import "./customizedStyles.css";
 import { connect } from "react-redux";
 import Header from "../Header/Header";
 import {
@@ -23,12 +24,17 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <Header />
-      {props.Type !== undefined ? (
-        <props.ChildComponent Type={props.Type} />
-      ) : (
-        <props.ChildComponent />
-      )}
+      <div className="header-container">
+        <Header />
+      </div>
+
+      <div className="view-container">
+        {props.Type !== undefined ? (
+          <props.ChildComponent Type={props.Type} />
+        ) : (
+          <props.ChildComponent />
+        )}
+      </div>
     </div>
   );
 };
