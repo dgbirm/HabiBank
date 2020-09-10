@@ -90,13 +90,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure( HttpSecurity http) 
       throws Exception {
-        http
+        http.cors().disable()
         .authorizeRequests()
-          .antMatchers("/", "/home","/login", "/signup").permitAll() // (3)
+          .antMatchers("/", "/register").permitAll() // (3)
           .anyRequest().authenticated() // (4)
           .and()
        .formLogin() // (5)
-         .loginPage("/login") // (5)
+         .loginPage("/") // (5)
          .permitAll()
          .and()
       .logout() // (6)
@@ -123,7 +123,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/offline.html", 
 				"/icons/**",
 				"/images/**",
-				"/styles/**",
+        "/styles/**",
+        "/auth/**",
+        "/api/**",
 				"/h2-console/**");
 	}
     
