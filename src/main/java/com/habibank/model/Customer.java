@@ -55,10 +55,8 @@ public class Customer implements Serializable {
 	private Set<Account> accounts = new HashSet<>();
 
 	private String fullName = "";
-	@OneToOne(targetEntity = User.class)
 	private String userName = "";
 	
-	@OneToOne(targetEntity = User.class)
 	@Email
 	private String email = "";
 	
@@ -66,13 +64,10 @@ public class Customer implements Serializable {
 
 	@Column(length = 10)
 	private String phoneNumber;
-
-	@Transient
-	private Enum accessLevel = Role.ERole.ROLE_CUSTOMER;
 	
-	@OneToOne(mappedBy = "cust")
-	private User usr;
-	
+	@OneToOne
+	@JoinColumn(name = "user_ID",referencedColumnName = "user_ID")
+	private User user;
 
 	/**
 	 * @param custID   id of the customer
