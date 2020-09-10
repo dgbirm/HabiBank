@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Navbar, Nav } from "react-bootstrap";
 import { updateLogInStatus } from "../../redux/actions/auth";
 import { clearCustomer } from "../../redux/actions/customer";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 /**
  * Universal header when the user is logged in
@@ -42,16 +42,20 @@ const Header = (props) => {
   };
 
   const renderLogo = () => {
+    const { loggedIn } = props;
+    let link = loggedIn ? "/home" : "";
     return (
-      <Navbar.Brand href="">
-        <img
-          src={logo}
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-          alt="Habi Bank logo"
-        />
-      </Navbar.Brand>
+      <Link to={link}>
+        <Navbar.Brand href="">
+          <img
+            src={logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt="Habi Bank logo"
+          />
+        </Navbar.Brand>
+      </Link>
     );
   };
   const renderLinks = () => {
