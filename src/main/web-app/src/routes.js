@@ -16,7 +16,6 @@ import Logout from "./components/Logout/Logout";
  * ex. http://localhost:3000/profile will render and display the UserProfile component
  */
 
-// TODO: implementation on BAW and Transaction components
 const createRoutes = () => (
   <BrowserRouter>
     <Switch>

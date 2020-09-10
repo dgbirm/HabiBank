@@ -1,6 +1,8 @@
 // General
 export const BANK_NAME = "Habi Bank";
 export const LOGIN_SLOGAN = "Reliable banking you can trust";
+export const GUEST = "Guest";
+export const HEADER_GREETING = "Welcome, ";
 
 // Account Home
 export const ACCOUNT_HOME = "Account Home";

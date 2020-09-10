@@ -6,6 +6,7 @@ import { updateLogInStatus } from "../../redux/actions/auth";
 import { clearCustomer } from "../../redux/actions/customer";
 import { withRouter, Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { BANK_NAME, HEADER_GREETING, GUEST } from "../../constants/index";
 /**
  * Universal header when the user is logged in
  */
@@ -13,11 +14,12 @@ const Header = (props) => {
   const renderName = () => {
     const { userLoaded, loggedIn, fullName, profile } = props;
     // userloaded check
-    let name = loggedIn ? profile.fullName : "Guest";
+    let name = loggedIn ? profile.fullName : GUEST;
 
     return (
       <Navbar.Text>
-        Welcome, <span className="navbar-name">{name}</span>
+        {HEADER_GREETING}
+        <span className="navbar-name">{name}</span>
       </Navbar.Text>
     );
   };

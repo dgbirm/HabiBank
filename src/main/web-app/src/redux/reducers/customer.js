@@ -1,4 +1,8 @@
-import { LOAD_SINGLE_CUSTOMER, CLEAR_CUSTOMER } from "../actions/actionTypes";
+import {
+  LOAD_CUSTOMER_PROFILE,
+  CLEAR_CUSTOMER,
+  LOAD_CHECKINGS,
+} from "../actions/actionTypes";
 /**
  * reducer managing a customer
  */
@@ -12,30 +16,36 @@ const initialState = {
     phoneNumber: "",
     customerID: 0,
   },
-  accounts: [
-    {
+  accounts: {
+    checkings: {
       accountID: 1,
       accountBalance: 900.1,
       accountType: "checkings",
     },
-    {
+    savings: {
       accountID: 2,
       accountBalance: 222.47,
       accountType: "savings",
     },
-  ],
+  },
   userLoaded: false,
 };
 
 function customerReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_SINGLE_CUSTOMER:
+    case LOAD_CUSTOMER_PROFILE:
       return Object.assign({}, state, {
         ...state,
         profile: action.payload,
         userLoaded: true,
       });
 
+    case LOAD_CHECKINGS:
+      return Object.assign({}, state, {
+        ...state,
+        ...state.accounts,
+        checkings: action.payload,
+      });
     case CLEAR_CUSTOMER:
       return initialState;
     default:
