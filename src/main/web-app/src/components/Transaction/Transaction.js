@@ -42,16 +42,18 @@ const Transaction = (props) => {
   };
 
   return (
-    <div>
+    <div className="form-wrapper customStyle">
       Transaction {props.Type}
-      <Form>
-        {renderSrcSelect()}
-        {props.Type === "Transfer" ? renderTgtSelect() : null}
-        {renderAmount()}
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+      <div className="form-container">
+        <Form>
+          {renderSrcSelect()}
+          {props.Type === "Transfer" ? renderTgtSelect() : null}
+          {renderAmount()}
+          <Button variant="primary" type="submit" className="shadowButton">
+            Submit
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 };

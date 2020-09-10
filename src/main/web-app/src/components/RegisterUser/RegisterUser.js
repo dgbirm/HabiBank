@@ -66,7 +66,7 @@ const RegisterUser = (props) => {
           </Form.Group>
         </Form.Row>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="shadowButton">
           {CREATE_ACCOUNT}
         </Button>
       </Form>

@@ -37,7 +37,7 @@ const Login = (props) => {
           <Form.Control type="password" placeholder={PASSWORD} />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="shadowButton">
           {SUBMIT}
         </Button>
       </Form>
