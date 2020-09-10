@@ -32,25 +32,27 @@ public class User implements Serializable{
 	@Autowired
 	private CustomerRepository custRepo;
 
-
 	//Changed this line trying to fix the error but got more errors
 	@Id
-	private Long custID;
-	
-	@OneToOne
-	@JoinColumn(name = "custID")
-	@MapsId
-	private Customer cust;
-	
+	@GeneratedValue
+	@Column(name = "user_ID")
+	private Long userID;
 	
 	//TODO: Check with truelove about these annotations
+	//These dont need to exist in user
 	private String userName;
 
 	private String email;
 
 	@Size(max = 120)
-	private String password;   
+	private String password;
+	
+	@Transient
+	private Enum accessLevel = Role.ERole.ROLE_CUSTOMER;
 
+	@OneToOne(mappedBy = "user")
+	private Customer cust;
+	
 	/* @ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -59,10 +61,10 @@ public class User implements Serializable{
 
 	public User() {}
 
-	public User(Long custID, String password) {
-		this.custID = custID;
-		this.userName = this.custRepo.findById(custID).get().getUserName();
-		this.email = this.custRepo.findById(custID).get().getEmail();
+	public User(Long ID, String password) {
+		this.userID = ID;
+		this.userName = this.custRepo.findById(ID).get().getUserName();
+		this.email = this.custRepo.findById(ID).get().getEmail();
 		this.password = password; //want to at some point store hash of password?
 	
 	}
@@ -70,15 +72,15 @@ public class User implements Serializable{
 //toString
 	@Override
 	public String toString() {
-		return "User [custID=" + custID + ", userName=" + userName + ", email=" + email + "]";
+		return "User [userID=" + userID + ", userName=" + userName + ", email=" + email + "]";
 	}
 
-	public synchronized Long getCustID() {
-		return custID;
+	public synchronized Long getUserID() {
+		return userID;
 	}
 
-	public synchronized void setCustID(Long custID) {
-		this.custID = custID;
+	public synchronized void setUserID(Long userID) {
+		this.userID = userID;
 	}
 
 	public synchronized String getUserName() {
