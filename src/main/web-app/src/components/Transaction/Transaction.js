@@ -2,7 +2,7 @@ import React from "react";
 import "./Transaction.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-
+import { withRouter } from "react-router-dom";
 /**
  * Transaction page. Options for user to withdraw, deposit, transfer
  * TO DO: pull from redux store
@@ -41,17 +41,31 @@ const Transaction = (props) => {
     );
   };
 
-  return (
-    <div>
-      Transaction {props.Type}
-      <Form>
+  // TO DO: implementation to send data over
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(props);
+    // const { loggedIn } = props;
+    // props.updateLogInStatus(!loggedIn);
+    props.history.push("/home");
+  };
+
+  const renderForm = () => {
+    return (
+      <Form onSubmit={handleSubmit}>
         {renderSrcSelect()}
         {props.Type === "Transfer" ? renderTgtSelect() : null}
         {renderAmount()}
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="shadowButton">
           Submit
         </Button>
       </Form>
+    );
+  };
+  return (
+    <div className="form-wrapper customStyle">
+      Transaction {props.Type}
+      <div className="form-container">{renderForm()}</div>
     </div>
   );
 };
@@ -62,4 +76,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {};
-export default connect(mapStateToProps, mapDispatchToProps)(Transaction);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Transaction));

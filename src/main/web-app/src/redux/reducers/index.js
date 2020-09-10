@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
-import checkings from "./checkings";
 import customer from "./customer";
-import savings from "./savings";
+import baseData from "./baseData";
+import auth from "./auth";
 
 export default combineReducers({
-  checkings,
   customer,
-  savings,
+  baseData,
+  auth,
 });

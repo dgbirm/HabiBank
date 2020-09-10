@@ -1,0 +1,46 @@
+.form-container {
+  margin: 25px;
+}
+
+form {
+  /* width: 50%;
+  margin: auto; */
+  position: relative;
+  text-align: center;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-wrapper {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  /* margin-left: 25%;
+  margin-right: 25%; */
+  /* background-image: url("../../assets/money-leaf.jpg");
+  background-repeat: no-repeat; */
+
+  border: solid 1px #56cc9d;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn .btn-primary {
+  text-align: center;
+}
+
+.shadowButton {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+.messages {
+  text-align: center;
+  margin: 25px;
+}
+
+.secondary-link {
+  margin: 15px;
+  text-align: center;
+}

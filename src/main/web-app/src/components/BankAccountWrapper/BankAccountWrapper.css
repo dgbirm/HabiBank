@@ -1,0 +1,13 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.transaction-buttons {
+  margin: 25px;
+}
+
+.tButton {
+  margin: 10px;
+}
