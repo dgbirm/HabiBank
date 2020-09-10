@@ -23,7 +23,6 @@ spring:
         hibernate:
             ddl-auto: create
         show-sql: true
-
 # JWT properties
 habibank:
     app:
