@@ -10,9 +10,9 @@ import logo from "../../assets/logo.png";
  */
 const Header = (props) => {
   const renderName = () => {
-    const { userLoaded, loggedIn, fullName } = props;
+    const { userLoaded, loggedIn, fullName, profile } = props;
     // userloaded check
-    let name = loggedIn ? fullName : "Guest";
+    let name = loggedIn ? profile.fullName : "Guest";
 
     return (
       <Navbar.Text>
@@ -95,6 +95,7 @@ const Header = (props) => {
 const mapStateToProps = (state) => {
   const { customer, auth } = state;
   return {
+    profile: customer.profile,
     fullName: customer.fullName,
     userLoaded: customer.userLoaded,
     loggedIn: auth.loggedIn,

@@ -20,7 +20,8 @@ const UserProfile = (props) => {
     // console.log(props);
     const { userLoaded } = props;
     if (userLoaded) {
-      const { fullName, address, email, phoneNumber } = props;
+      const { profile } = props;
+      const { fullName, address, email, phoneNumber } = profile;
       return (
         <div>
           <h3>{fullName}</h3>
@@ -53,6 +54,7 @@ const UserProfile = (props) => {
 const mapStateToProps = (state) => {
   const { customer } = state;
   return {
+    profile: customer.profile,
     fullName: customer.fullName,
     email: customer.email,
     address: customer.address,
