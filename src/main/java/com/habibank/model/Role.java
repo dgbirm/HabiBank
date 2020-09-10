@@ -8,8 +8,9 @@ Model for Authorization
 public class Role {
 		
     public enum ERole {
+		ROLE_USER,
         ROLE_CUSTOMER, 
-        ROLE_ADMIN
+        ROLE_ADMIN;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

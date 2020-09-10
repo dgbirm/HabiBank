@@ -30,7 +30,6 @@ import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//TODO: Set the table relationships
 /**
  * The class Customer: describes a Customer object
  * Reuse code from user to add email and username and password
@@ -38,9 +37,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "customer")
 public class Customer implements Serializable {
-
-	// Thought:
-	// TODO Should we add a password property for a customer to login? for login
 
 	private static final long serialVersionUID = 2639005257252900439L;
 

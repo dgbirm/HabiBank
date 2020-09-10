@@ -22,11 +22,6 @@
 		<yarn.version>v1.22.4</yarn.version>
 		<frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
 	</properties>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 562e18d4133b2c7a5bad0d6b4fd75fdaceaf177f
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -119,10 +114,6 @@
 			</properties>
 		</profile>
 	</profiles>
-<<<<<<< HEAD
->>>>>>> 8f35eee97789d83ebf9926d7e83e7fda0fc5e5b8
-=======
->>>>>>> 562e18d4133b2c7a5bad0d6b4fd75fdaceaf177f
 	<dependencies>
 	<!--Dependency for FilterChain for resolving JDK 14 compatibility-->
 		<dependency>
@@ -149,22 +140,12 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-<<<<<<< HEAD
-<<<<<<< HEAD
 			<version>6.0.2.Final</version>
-=======
->>>>>>> 8f35eee97789d83ebf9926d7e83e7fda0fc5e5b8
-=======
->>>>>>> 562e18d4133b2c7a5bad0d6b4fd75fdaceaf177f
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
-<<<<<<< HEAD
-<<<<<<< HEAD
 			<version>6.0.2.Final</version>
-=======
->>>>>>> 562e18d4133b2c7a5bad0d6b4fd75fdaceaf177f
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
@@ -180,12 +161,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-<<<<<<< HEAD
 			<version>5.3.4.RELEASE</version>
-=======
->>>>>>> 8f35eee97789d83ebf9926d7e83e7fda0fc5e5b8
-=======
->>>>>>> 562e18d4133b2c7a5bad0d6b4fd75fdaceaf177f
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

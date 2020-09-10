@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.constraints.Email;
 
 
-//TODO:
 public class SignupRequest {
 
     @NotBlank
