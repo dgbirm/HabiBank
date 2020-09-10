@@ -13,7 +13,7 @@ form {
   text-align: left;
 }
 
-.login-wrapper {
+.form-wrapper {
   display: block;
   margin: 0 auto;
   width: 50%;
@@ -36,7 +36,7 @@ form {
   margin: 25px;
 }
 
-.registerLink {
+.secondary-link {
   margin: 15px;
   text-align: center;
 }

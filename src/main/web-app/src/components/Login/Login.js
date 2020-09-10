@@ -11,7 +11,7 @@ import {
   ENTER_EMAIL,
   PASSWORD,
   SUBMIT,
-  REGISTER,
+  CREATE_ACCOUNT_TODAY,
 } from "../../constants/index";
 // putting fetch actions here for now
 // const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
@@ -56,11 +56,11 @@ const Login = (props) => {
   };
 
   return (
-    <div className="login-wrapper">
+    <div className="form-wrapper">
       {renderMessages()}
       <div className="form-container">{renderForm()}</div>
-      <div className="registerLink">
-        <Link to="/register">{REGISTER}</Link>
+      <div className="secondary-link">
+        <Link to="/register">{CREATE_ACCOUNT_TODAY}</Link>
       </div>
     </div>
   );
