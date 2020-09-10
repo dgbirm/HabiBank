@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Login.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
@@ -13,15 +13,25 @@ import {
   SUBMIT,
   CREATE_ACCOUNT_TODAY,
 } from "../../constants/index";
+import { fetchCustomer } from "../../redux/actions/customer";
+
 // putting fetch actions here for now
 // const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
 const Login = (props) => {
+  // async function loadAll() {
+  //   await props.fetchCustomer();
+  // }
+  // useEffect(() => {
+  //   loadAll();
+  // });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(props);
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
     props.history.push("/home");
+    props.fetchCustomer();
   };
 
   const renderForm = () => {
@@ -72,5 +82,5 @@ const mapStateToProps = (state) => {
   return { loggedIn: auth.loggedIn };
 };
 
-const mapDispatchToProps = { updateLogInStatus };
+const mapDispatchToProps = { updateLogInStatus, fetchCustomer };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

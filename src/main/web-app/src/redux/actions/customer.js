@@ -1,4 +1,4 @@
-import { LOAD_SINGLE_CUSTOMER } from "./actionTypes";
+import { LOAD_SINGLE_CUSTOMER, CLEAR_CUSTOMER } from "./actionTypes";
 import axios from "axios";
 
 export const fetchCustomer = (id) => {
@@ -16,5 +16,11 @@ export const loadCustomer = (data) => {
   return {
     type: LOAD_SINGLE_CUSTOMER,
     payload: data.content[0],
+  };
+};
+
+export const clearCustomer = () => {
+  return {
+    type: CLEAR_CUSTOMER,
   };
 };

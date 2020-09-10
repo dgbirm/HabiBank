@@ -3,6 +3,7 @@ import "./Header.css";
 import { connect } from "react-redux";
 import { Navbar, Nav } from "react-bootstrap";
 import { updateLogInStatus } from "../../redux/actions/auth";
+import { clearCustomer } from "../../redux/actions/customer";
 import { withRouter } from "react-router-dom";
 import logo from "../../assets/logo.png";
 /**
@@ -24,6 +25,7 @@ const Header = (props) => {
   const handleLogOut = () => {
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
+    props.clearCustomer();
     props.history.push("/");
   };
 
@@ -102,5 +104,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { updateLogInStatus };
+const mapDispatchToProps = { updateLogInStatus, clearCustomer };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

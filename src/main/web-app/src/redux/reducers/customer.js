@@ -1,16 +1,16 @@
-import { LOAD_SINGLE_CUSTOMER } from "../actions/actionTypes";
+import { LOAD_SINGLE_CUSTOMER, CLEAR_CUSTOMER } from "../actions/actionTypes";
 /**
  * reducer managing a customer
  */
 
 const initialState = {
   profile: {
-    userName: "jdoe",
-    fullName: "Jane Doe",
-    email: "jd@doeeee.com",
-    address: "Disneyland, CA",
-    phoneNumber: "1234567890",
-    customerID: 1,
+    userName: "",
+    fullName: "",
+    email: "",
+    address: "",
+    phoneNumber: "",
+    customerID: 0,
   },
   accounts: [
     {
@@ -24,7 +24,7 @@ const initialState = {
       accountType: "savings",
     },
   ],
-  userLoaded: true, //false, // currently hard coded
+  userLoaded: false,
 };
 
 function customerReducer(state = initialState, action) {
@@ -32,9 +32,12 @@ function customerReducer(state = initialState, action) {
     case LOAD_SINGLE_CUSTOMER:
       return Object.assign({}, state, {
         ...state,
-        ...action.payload,
+        profile: action.payload,
         userLoaded: true,
       });
+
+    case CLEAR_CUSTOMER:
+      return initialState;
     default:
       return state;
   }
