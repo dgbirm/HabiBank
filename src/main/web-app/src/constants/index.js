@@ -12,6 +12,21 @@ export const SAVINGS = "Savings";
 export const CHECKINGS = "Checkings";
 export const BALANCE = "Balance";
 
+// Checkings
+export const MY_CHECKINGS = "My Checkings Account";
+export const CHECKINGS_MESSAGE =
+  "See below for information on your checkings account activity";
+
+// Savings
+export const MY_SAVINGS = "My Savings Account";
+export const SAVINGS_MESSAGE =
+  "See below for information on your savings account activity";
+
+// Transactions
+export const DEPOSIT = "Deposit";
+export const WITHDRAW = "Withdraw";
+export const TRANSFER = "Transfer";
+
 // Form Labels
 export const USERNAME = "Username";
 export const PASSWORD = "Password";
