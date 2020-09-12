@@ -31,8 +31,8 @@ import javax.validation.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * The class Customer: describes a Customer object
- * Reuse code from user to add email and username and password
+ * The class Customer: describes a Customer object Reuse code from user to add
+ * email and username and password
  */
 @Entity
 @Table(name = "customer")
@@ -46,45 +46,57 @@ public class Customer implements Serializable {
 	private Long custID;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "cust_acct",  joinColumns = @JoinColumn(name = "custID"), inverseJoinColumns = @JoinColumn(name = "acctID"))
+	@JoinTable(name = "cust_acct", joinColumns = @JoinColumn(name = "custID"), inverseJoinColumns = @JoinColumn(name = "acctID"))
 	@JsonIgnore
 	private Set<Account> accounts = new HashSet<>();
 
 	private String fullName = "";
 	private String userName = "";
-	
+
 	@Email
 	private String email = "";
-	
+
 	private String address = "";
+	private String password = "";
 
 	@Column(length = 10)
 	private String phoneNumber;
-	
+
 	@OneToOne
-	@JoinColumn(name = "user_ID",referencedColumnName = "user_ID")
+	@JoinColumn(name = "user_ID", referencedColumnName = "user_ID")
 	private User user;
 
 	/**
-	 * @param custID   id of the customer
-	 * @param custName given name of the customer. "" by default
-	 * @param fullname customer fullname for login
-	 * @param password password for customer account
-	 * @param email    a email to identify a customer or fullname. cant be null
-	 * @param address  customer addr. Empty String if unknown
+	 * @param custID             id of the customer
+	 * @param custName           given name of the customer. "" by default
+	 * @param fullname           customer fullname for login
+	 * @param password           password for customer account
+	 * @param email              a email to identify a customer or fullname. cant be
+	 *                           null
+	 * @param address            customer addr. Empty String if unknown
+	 * 
+	 * optional and considering
+	 * @param confirmation_token private String confirmationToken;
 	 */
 
 	// Constructors
-	public Customer(){}
+	public Customer() {
+	}
 
-	public Customer(String userName, String fullName, String email, String address,
+	
+
+	public Customer(String userName, String password, String fullName, String email, String address,
 			String phoneNumber) {
+				
 		this.userName = userName;
 		this.fullName = fullName;
 		this.email = email;
+		this.password = password;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 	} 
+
+	
 	
 	public synchronized Set<Account> getAccounts() {
 		return this.accounts;
@@ -104,7 +116,7 @@ public class Customer implements Serializable {
 	@Override
 	public String toString() {
 		return "Customer [custID=" + custID
-				+ ", userName=" + userName + ", fullName=" + fullName + ", email=" + email + ", address=" + address
+				+ ", userName=" + userName + ", fullName=" + fullName + ", email=" + email + ", password=" + password + ", address=" + address
 				+ ", phoneNumber=" + phoneNumber + "]";
 	}
 	
@@ -129,6 +141,14 @@ public class Customer implements Serializable {
 	}
 
 //GetterSetters
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public synchronized Long getCustomerID() {
 		return custID;
 	}

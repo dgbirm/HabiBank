@@ -1,8 +1,13 @@
 package com.habibank.security;
 
+import com.habibank.security.jwt.AuthEntryPointJwt;
+import com.habibank.security.jwt.AuthTokenFilter;
+import com.habibank.security.services.UserDetailsServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -10,19 +15,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-
-import com.habibank.security.jwt.AuthEntryPointJwt;
-import com.habibank.security.jwt.AuthTokenFilter;
-import com.habibank.security.services.UserDetailsServiceImpl;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /***
  * 
  */
 @Configuration
+@EnableWebMvc
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
     // securedEnabled = true,
@@ -30,19 +34,6 @@ import com.habibank.security.services.UserDetailsServiceImpl;
     prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
-/*   private static final String LOGIN_PROCESSING_URL = "/login";
-	private static final String LOGIN_FAILURE_URL = "/login?error";
-	private static final String LOGIN_URL = "/login";
-  private static final String LOGIN_SUCCESS_URL = "/login";
-  
-
-  private static final String SIGNIN_PROCESSING_URL = "/signin";
-	private static final String SIGNIN_FAILURE_URL = "/signin?error"; //
-	private static final String SIGNIN_URL = "/signin";
-  private static final String SIGNIN_SUCCESS_URL = "/login";
-   */
 
   @Autowired
   UserDetailsServiceImpl userDetailsService;
@@ -79,30 +70,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   //
 
- //For testing 
+/*  //For testing 
     auth.inMemoryAuthentication()
     .withUser("cj")
     .password("password")
-    .roles("USER");
+    .roles("USER"); */
   }
+
+  
 
 
     @Override
     protected void configure( HttpSecurity http) 
       throws Exception {
-        http.cors().disable()
-        .authorizeRequests()
-          .antMatchers("/", "/register").permitAll() // (3)
-          .anyRequest().authenticated() // (4)
-          .and()
-       .formLogin() // (5)
-         .loginPage("/") // (5)
-         .permitAll()
-         .and()
-      .logout() // (6)
-        .permitAll()
-        .and()
-      .httpBasic(); // (7)
+        http.csrf().disable()
+        .authorizeRequests().antMatchers(HttpMethod.OPTIONS,"*/").permitAll()
+        .antMatchers(HttpMethod.GET,"/login").permitAll();
 
        /*    .formLogin().loginPage("/index.html")
           .loginProcessingUrl("/perform_login") // Changed to login page 

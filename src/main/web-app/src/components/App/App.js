@@ -11,16 +11,16 @@ import {
 import { fetchCustomer } from "../../redux/actions/customer";
 
 const App = (props) => {
-  // temporary feature - loads all db data into redux store
-  // async function loadAll() {
-  //   await props.fetchCustomers();
-  //   await props.fetchAccounts();
-  //   await props.fetchTransactions();
-  //   await props.fetchCustomer();
-  // }
-  // useEffect(() => {
-  //   loadAll();
-  // });
+ // temporary feature - loads all db data into redux store
+  async function loadAll() {
+    await props.fetchCustomers();
+    await props.fetchAccounts();
+    await props.fetchTransactions();
+    await props.fetchCustomer();
+  }
+  useEffect(() => {
+    loadAll();
+  });
 
   return (
     <div className="App">

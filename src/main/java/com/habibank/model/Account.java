@@ -11,6 +11,7 @@
 package com.habibank.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,6 +21,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -28,14 +31,13 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.habibank.exceptions.OverdraftException;
 
-
 @Entity
-@Table(name="account")
+@Table(name = "account")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = -776361010511187135L;
-	
-	//Should we add a parent or main customer id to account
+
+	// Should we add a parent or main customer id to account
 	// @OneToMany
 	// @JoinColumn(name = "acct_id")
 	// private Account AccountOwner;
@@ -45,30 +47,38 @@ public class Account implements Serializable {
 	@Column(updatable = false)
 	private Long acctID;
 
-	@ManyToMany(mappedBy = "accounts",
-				cascade = { 
-						//CascadeType.MERGE,
-						CascadeType.PERSIST
-					})
+	@ManyToMany(mappedBy = "accounts", cascade = {
+			// CascadeType.MERGE,
+			CascadeType.PERSIST })
 	@JsonIgnore
 	private Set<Customer> customersOnAccount = new HashSet<>();
-	
-	private Double acctBalance=0.0;
-	private Enum<AccountType> acctType = AccountType.CHECKING;
-	
-	//Constructors
+
+	private Double acctBalance = 0.0;
+
+	@Enumerated(EnumType.STRING)
+	private AccountType acctType = AccountType.CHECKING;
+
+	// Constructors
 	/**
-	 * @param acctID Unique id of the account
+	 * @param acctID          Unique id of the account
 	 * @param acctCustomerIDs IDs of customers associated with the account
-	 * @param acctPass Password for the account
-	 * @param acctBalance Balance for the account. If not given, defaults to 0
-	 * @param acctType type of the account (checking or savings)
+	 * @param acctPass        Password for the account
+	 * @param acctBalance     Balance for the account. If not given, defaults to 0
+	 * @param acctType        type of the account (checking or savings)
 	 */
-  
-	public Account(Enum<AccountType> acctType) {
+
+	public Account(AccountType acctType) {
 		this.acctType = acctType;
 	}
-	
+
+/* 	public Account( BigInteger acctID, AccountType acctType, double acctBalance) {
+
+		this.acctID = acctID.longValue();
+		this.acctType = acctType;
+		this.acctBalance = acctBalance;
+
+	}
+	 */
 	public Account() {}
 	
 	public Set<Customer> getCustomers() {
@@ -154,14 +164,14 @@ public class Account implements Serializable {
 	/**
 	 * @return the acctType
 	 */
-	public synchronized Enum<AccountType> getAcctType() {
+	public synchronized AccountType getAcctType() {
 		return acctType;
 	}
 
 	/**
 	 * @param acctType the acctType to set
 	 */
-	public synchronized void setAcctType(Enum<AccountType> acctType) {
+	public synchronized void setAcctType(AccountType acctType) {
 		this.acctType = acctType;
 	}
 

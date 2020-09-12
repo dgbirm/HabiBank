@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("api/user/accounts")
-public class AccountController {
+@RequestMapping("/")
+ public class SigninController {
 
 }
