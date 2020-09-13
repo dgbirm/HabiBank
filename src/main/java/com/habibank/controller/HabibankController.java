@@ -55,12 +55,12 @@ public class HabibankController {
 	private TransactionRepository transRepo;
 
 	// should this be done on the front-end?
-	@RequestMapping(value = {
-		"index"
-	}) //flag '', '/', 'index' to support [react-app] index
-	private RedirectView index() {
-		return new RedirectView("");
-	}
+	// @RequestMapping(value = {
+	// 	"index"
+	// }) //flag '', '/', 'index' to support [react-app] index
+	// private RedirectView index() {
+	// 	return new RedirectView("");
+	// }
 
 	//login request
 	@GetMapping("/login/{userName}/{password}")
@@ -78,7 +78,7 @@ public class HabibankController {
 
 	@PostMapping("/register/{userName}/{fullName}/{email}/{password}")
 	public Customer registerCustomer(@RequestBody Customer c){
-		if(custRepo.contains(c.getUserName()) && custRepo.contains(c.getEmail())){
+		if(custRepo.equals(c.getUserName()) && custRepo.equals(c.getEmail())){
 			return null;
 			//give a failure and not post
 		}

@@ -115,6 +115,16 @@
 		</profile>
 	</profiles>
 	<dependencies>
+	<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
+	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+	<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional>
+    </dependency>
 	<!--Dependency for FilterChain for resolving JDK 14 compatibility-->
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
