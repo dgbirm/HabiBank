@@ -16,9 +16,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "redux-thunk": "^2.3.0",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.1.0"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
