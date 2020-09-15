@@ -7,6 +7,7 @@ import com.habibank.model.Account;
 import com.habibank.model.AccountType;
 import com.habibank.model.Customer;
 import com.habibank.model.Transaction;
+import com.habibank.model.User;
 import com.habibank.repo.AccountRepository;
 import com.habibank.repo.CustomerRepository;
 import com.habibank.repo.TransactionRepository;
@@ -31,10 +32,11 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Customer chris = new Customer("cj", "Chris Jabb","fearandloathinginUSSR@aol.com","nowhere", "1233334545");
-		Customer matt = new Customer("mk", "Matty K","servethesovietunion@lol.com","everwhere","2223334545");
-		Customer nat = new Customer("nn", "Natasha Ng","nn@yahoo.com","Seattle","3123334545");
-		Customer dan = new Customer("db", "Danny B","danny@netscape.com","somewhere", "693334545");
+		//User user1 = new User((long) 1, "password");
+		Customer chris = new Customer("cj", "password", "Chris Jabb","chrisjabb@aol.com","nowhere", "1233334545");
+		Customer matt = new Customer("mk", "password", "Matty K","servethesovietunion@lol.com","everwhere","2223334545");
+		Customer nat = new Customer("nn", "password", "Natasha Ng","nn@yahoo.com","Seattle","3123334545");
+		Customer dan = new Customer("db", "password", "Danny B","danny@netscape.com","somewhere", "693334545");
 		
 		Account chrisAcct = new Account();
 		chris.addCustomerToAccount(chrisAcct);

@@ -1,11 +1,14 @@
 package com.habibank.controller;
 
 import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,13 +55,72 @@ public class HabibankController {
 	private TransactionRepository transRepo;
 
 	// should this be done on the front-end?
-	@RequestMapping(value = {
-		"index"
-	}) //flag '', '/', 'index' to support [react-app] index
-	private RedirectView index() {
-		return new RedirectView("");
+	// @RequestMapping(value = {
+	// 	"index"
+	// }) //flag '', '/', 'index' to support [react-app] index
+	// private RedirectView index() {
+	// 	return new RedirectView("");
+	// }
+
+	//login request
+	@GetMapping("/login/{userName}/{password}")
+	public Customer loginAttempt(@PathVariable("userName")String userName, @PathVariable("password") String password) {
+		return this.custRepo.findByUserNameAndPassword(userName,password);
 	}
 
+	//look into @requestbody
+	//get accounts by customer
+	@GetMapping("customer/accounts/{custID}")
+	public List<Account> getCustomerAccounts(@PathVariable("custID") List<Account> custID) {
+		return this.custRepo.getCustomerAccounts(custID);
+	}
+
+
+	@PostMapping("/register/{userName}/{fullName}/{email}/{password}")
+	public Customer registerCustomer(@RequestBody Customer c){
+		if(custRepo.equals(c.getUserName()) && custRepo.equals(c.getEmail())){
+			return null;
+			//give a failure and not post
+		}
+		else {
+			return custRepo.save(c);
+			//save this information
+		}
+	}
+
+
+		// //get accounts by customer
+		// @GetMapping("customer/{custID}/transactions")
+		// public List<Account> getCustomerTransactions(@PathVariable("custID") List<Account> custID) {
+		// 	return this.custRepo.getCustomerAccounts(custID);
+		// }
+
+	
+	//register page
+		
+	//getaccounts by customer username
+	//@GetMapping
+	
+
+
+
+	//get mapping to show transactions by customerId
+
+	//post mapping deposit by customer/username/accountid 
+
+	//post mapping withdraw by customer/username/accountid 
+
+
+	//put mapping to update customer information
+
+
+
+
+	//some way to logout
+
+
+
+	
 	//Get all customers or view all customers  
 	@GetMapping("api/customers")
 	public Iterable<Customer> getAllCustomers(Pageable pg) {
@@ -77,23 +139,16 @@ public class HabibankController {
         return this.transRepo.findAll(pg);
 	}
 
-	//Get a specific account
-
-
-	//Get customer
-
-
-
-
 //create customer	
 	@PostMapping("api/customers")
 	private ResponseEntity<?> createCust(@RequestBody Customer c) {
 		Customer createdCustomer = new Customer(
-				c.getUserName(),c.getFullName(),c.getEmail(),
+				c.getUserName(),c.getFullName(),c.getEmail(), c.getPassword(),
 				c.getAddress(),c.getPhoneNumber());
 		this.custRepo.saveAndFlush(createdCustomer);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdCustomer.getCustomerID()).toUri();
 		return ResponseEntity.created(location).build();
 	}
+//Login as customer
 
 }
