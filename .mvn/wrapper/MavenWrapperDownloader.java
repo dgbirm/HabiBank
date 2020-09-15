@@ -70,6 +70,7 @@ public class MavenWrapperDownloader {
                     }
                 } catch (IOException e) {
                     // Ignore ...
+                    System.out.println("Something unexpected happened with loading Maven properities file");
                 }
             }
         }
