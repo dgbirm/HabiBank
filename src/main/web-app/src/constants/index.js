@@ -51,3 +51,7 @@ export const SUBMIT = "Submit";
 export const CREATE_ACCOUNT_TODAY = "Create an account today!";
 export const LOG_IN_NOW = "Have an account? Log in now!";
 export const CREATE_ACCOUNT = "Create Account";
+
+// Profile
+export const USER_PROFILE = "User Profile";
+export const PROFILE_MESSAGE = "View below for details about your account";
