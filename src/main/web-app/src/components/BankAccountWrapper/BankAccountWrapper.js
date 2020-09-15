@@ -20,17 +20,17 @@ import {
  * Displays savings or checkings account info here (balance, transaction history)
  */
 const BankAccountWrapper = (props) => {
-  const getID = (type) => {
-    for (let i = 0; i < props.accounts.length; i++) {
-      let obj = props.accounts[i];
-      if (obj.accountType.toUpperCase() === type) {
-        return obj.accountID;
-      }
-    }
-  };
+  // const getID = (type) => {
+  //   for (let i = 0; i < props.accounts.length; i++) {
+  //     let obj = props.accounts[i];
+  //     if (obj.accountType.toUpperCase() === type) {
+  //       return obj.accountID;
+  //     }
+  //   }
+  // };
 
   const renderMessages = () => {
-    let id = props.Type === CHECKINGS ? getID("CHECKINGS") : getID("SAVINGS");
+    // let id = props.Type === CHECKINGS ? getID("CHECKINGS") : getID("SAVINGS");
     let title = props.Type === CHECKINGS ? MY_CHECKINGS : MY_SAVINGS;
     let message =
       props.Type === CHECKINGS ? CHECKINGS_MESSAGE : SAVINGS_MESSAGE;
@@ -38,7 +38,8 @@ const BankAccountWrapper = (props) => {
       <div className="messages">
         <h2>{title}</h2>
         <p>
-          {BANK_ACCOUNT_ID} {id}{" "}
+          {BANK_ACCOUNT_ID}
+          {/* {id}{" "} */}
         </p>
         <h6>
           <i>{message}</i>
@@ -60,7 +61,7 @@ const BankAccountWrapper = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.accounts.map((each, index) => {
+            {/* {props.accounts.map((each, index) => {
               return (
                 <tr key={index}>
                   <td>{each.accountID}</td>
@@ -68,7 +69,7 @@ const BankAccountWrapper = (props) => {
                   <td>${each.accountBalance.toFixed(2)}</td>
                 </tr>
               );
-            })}
+            })} */}
           </tbody>
         </Table>
       </div>

@@ -16,6 +16,7 @@ import {
 import {
   fetchCustomerProfile,
   fetchCheckings,
+  fetchSavings,
 } from "../../redux/actions/customer";
 
 // putting fetch actions here for now
@@ -26,10 +27,21 @@ const Login = (props) => {
     // console.log(props);
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
-    props.history.push("/home");
     props.fetchCustomerProfile();
     props.fetchCheckings();
+    props.fetchSavings();
+    props.history.push("/home");
   };
+
+  // async function loadAll() {
+  //   await props.fetchCustomerProfile()
+  //   await props.fetchCheckings()
+  //   await props.fetchSavings()
+
+  // }
+  // useEffect(() => {
+  //   loadAll();
+  // });
 
   const renderForm = () => {
     return (
@@ -83,5 +95,6 @@ const mapDispatchToProps = {
   updateLogInStatus,
   fetchCustomerProfile,
   fetchCheckings,
+  fetchSavings,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

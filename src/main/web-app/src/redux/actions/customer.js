@@ -3,6 +3,8 @@ import {
   CLEAR_CUSTOMER,
   LOAD_CUSTOMER_ACCOUNTS,
   LOAD_CHECKINGS,
+  LOAD_SAVINGS,
+  SET_ACCOUNTS_LOADED,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -17,7 +19,7 @@ export const fetchCustomerProfile = (id) => {
   };
 };
 
-// 0 to get cj.... TODO to pass in ID#
+// TODO to pass in ID#
 export const loadCustomerProfile = (data) => {
   return {
     type: LOAD_CUSTOMER_PROFILE,
@@ -43,9 +45,35 @@ export const fetchCheckings = () => {
 };
 
 export const loadCheckings = (data) => {
-  console.log("AC", data);
+  let { acctID, acctBalance, acctType } = data.content[0];
   return {
     type: LOAD_CHECKINGS,
-    payload: data.content,
+    payload: { acctID, acctBalance, acctType },
+  };
+};
+
+export const fetchSavings = () => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:8080/api/accounts?page=2&size=1`)
+      .then((res) => {
+        dispatch(loadSavings(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const loadSavings = (data) => {
+  let { acctID, acctBalance, acctType } = data.content[0];
+  return {
+    type: LOAD_SAVINGS,
+    payload: { acctID, acctBalance, acctType },
+  };
+};
+
+export const setAccountsLoaded = (status) => {
+  return {
+    type: SET_ACCOUNTS_LOADED,
+    payload: status,
   };
 };

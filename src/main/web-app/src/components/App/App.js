@@ -26,6 +26,7 @@ const App = (props) => {
     loadAll();
   });
 
+  // userloaded false => spinner?
   return (
     <div className="App">
       <div className="header-container">

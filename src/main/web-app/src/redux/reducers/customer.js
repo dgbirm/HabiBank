@@ -2,6 +2,8 @@ import {
   LOAD_CUSTOMER_PROFILE,
   CLEAR_CUSTOMER,
   LOAD_CHECKINGS,
+  LOAD_SAVINGS,
+  SET_ACCOUNTS_LOADED,
 } from "../actions/actionTypes";
 /**
  * reducer managing a customer
@@ -16,19 +18,18 @@ const initialState = {
     phoneNumber: "",
     customerID: 0,
   },
-  accounts: {
-    checkings: {
-      accountID: 1,
-      accountBalance: 900.1,
-      accountType: "checkings",
-    },
-    savings: {
-      accountID: 2,
-      accountBalance: 222.47,
-      accountType: "savings",
-    },
+  checkings: {
+    acctID: 0,
+    acctBalance: 0,
+    acctType: "",
+  },
+  savings: {
+    acctID: 0,
+    acctBalance: 0,
+    acctType: "",
   },
   userLoaded: false,
+  accountsLoaded: false,
 };
 
 function customerReducer(state = initialState, action) {
@@ -43,9 +44,21 @@ function customerReducer(state = initialState, action) {
     case LOAD_CHECKINGS:
       return Object.assign({}, state, {
         ...state,
-        ...state.accounts,
         checkings: action.payload,
       });
+
+    case LOAD_SAVINGS:
+      return Object.assign({}, state, {
+        ...state,
+        savings: action.payload,
+      });
+
+    case SET_ACCOUNTS_LOADED:
+      return {
+        ...state,
+        actionLoaded: action.payload,
+      };
+
     case CLEAR_CUSTOMER:
       return initialState;
     default:
