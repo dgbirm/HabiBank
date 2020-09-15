@@ -3,8 +3,10 @@ import "./Header.css";
 import { connect } from "react-redux";
 import { Navbar, Nav } from "react-bootstrap";
 import { updateLogInStatus } from "../../redux/actions/auth";
-import { withRouter } from "react-router-dom";
+import { clearCustomer } from "../../redux/actions/customer";
+import { withRouter, Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { BANK_NAME, HEADER_GREETING, GUEST } from "../../constants/index";
 /**
  * Universal header when the user is logged in
  */
@@ -12,11 +14,12 @@ const Header = (props) => {
   const renderName = () => {
     const { userLoaded, loggedIn, fullName, profile } = props;
     // userloaded check
-    let name = loggedIn ? profile.fullName : "Guest";
+    let name = loggedIn ? profile.fullName : GUEST;
 
     return (
       <Navbar.Text>
-        Welcome, <span className="navbar-name">{name}</span>
+        {HEADER_GREETING}
+        <span className="navbar-name">{name}</span>
       </Navbar.Text>
     );
   };
@@ -24,6 +27,7 @@ const Header = (props) => {
   const handleLogOut = () => {
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
+    props.clearCustomer();
     props.history.push("/");
   };
 
@@ -40,16 +44,20 @@ const Header = (props) => {
   };
 
   const renderLogo = () => {
+    const { loggedIn } = props;
+    let link = loggedIn ? "/home" : "";
     return (
-      <Navbar.Brand href="">
-        <img
-          src={logo}
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-          alt="Habi Bank logo"
-        />
-      </Navbar.Brand>
+      <Link to={link}>
+        <Navbar.Brand href="">
+          <img
+            src={logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt="Habi Bank logo"
+          />
+        </Navbar.Brand>
+      </Link>
     );
   };
   const renderLinks = () => {
@@ -102,5 +110,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { updateLogInStatus };
+const mapDispatchToProps = { updateLogInStatus, clearCustomer };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

@@ -15,6 +15,9 @@ const ACCT_REST_API_URL = "http://localhost:8080/api/accounts";
 const TRANS_REST_API_URL = "http://localhost:8080/api/transactions";
 
 export const fetchCustomers = () => {
+  // fetch(CUST_REST_API_URL, { mode: "no-cors" }).then((res) =>
+  //   console.log(res.data)
+  // );
   return (dispatch) => {
     return axios
       .get(CUST_REST_API_URL)
