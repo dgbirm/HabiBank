@@ -13,6 +13,7 @@ import {
   AMOUNT,
   TO_ACCOUNT,
   FROM_ACCOUNT,
+  SUBMIT,
 } from "../../constants/index";
 /**
  * Transaction page. Options for user to withdraw, deposit, transfer
@@ -70,9 +71,6 @@ const Transaction = (props) => {
   // TO DO: implementation to send data over
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(props);
-    // const { loggedIn } = props;
-    // props.updateLogInStatus(!loggedIn);
     props.history.push("/home");
   };
 
@@ -83,7 +81,7 @@ const Transaction = (props) => {
         {props.Type === "Transfer" ? renderTgtSelect() : null}
         {renderAmount()}
         <Button variant="primary" type="submit" className="shadowButton">
-          Submit
+          {SUBMIT}
         </Button>
       </Form>
     );
@@ -98,7 +96,6 @@ const Transaction = (props) => {
   );
 };
 
-// export default Transaction;
 const mapStateToProps = (state) => {
   return {};
 };

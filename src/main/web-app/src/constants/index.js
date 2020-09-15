@@ -4,6 +4,12 @@ export const LOGIN_SLOGAN = "Reliable banking you can trust";
 export const GUEST = "Guest";
 export const HEADER_GREETING = "Welcome, ";
 
+// Nav Header Link Titles
+export const NAV_HOME = "Home";
+export const NAV_PROFILE = "Profile";
+export const NAV_LOG_IN = "Log In";
+export const NAV_LOG_OUT = "Log Out";
+
 // Account Home
 export const ACCOUNT_HOME = "Account Home";
 export const ACCOUNT_HOME_MESSAGE =

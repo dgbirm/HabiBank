@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./AccountHome.css";
 import { connect } from "react-redux";
 import { Button, Table } from "react-bootstrap";
@@ -22,14 +22,6 @@ import {
  * Multiple user routes can be taken here (reference user flow diagram)
  */
 const AccountHome = (props) => {
-  // async function loadAll() {
-  //   await props.fetchCustomerProfile();
-  //   await props.fetchCheckings();
-  //   await props.fetchSavings();
-  // }
-  // useEffect(() => {
-  //   loadAll();
-  // });
   const renderMessages = () => {
     return (
       <div className="messages">
@@ -42,7 +34,6 @@ const AccountHome = (props) => {
   };
 
   const renderBalanceView = () => {
-    // console.log(props);
     return (
       <div className="form-wrapper customStyle">
         <Table striped borderless hover>
@@ -54,26 +45,19 @@ const AccountHome = (props) => {
             </tr>
           </thead>
           <tbody>
-            {/* {props.savings.map((each, index) => {
-              return ( */}
             <tr>
               <td>{props.savings.acctID}</td>
               <td>{props.savings.acctType.toUpperCase()}</td>
               <td>${props.savings.acctBalance.toFixed(2)}</td>
               <td>{renderButton(props.savings.acctType.toUpperCase())}</td>
             </tr>
-            {/* );
-            })} */}
-            {/* {props.checkings.map((each, index) => {
-              return ( */}
+
             <tr>
               <td>{props.checkings.acctID}</td>
               <td>{props.checkings.acctType.toUpperCase()}</td>
               <td>${props.checkings.acctBalance.toFixed(2)}</td>
               <td>{renderButton(props.checkings.acctType.toUpperCase())}</td>
             </tr>
-            {/* );
-            })} */}
           </tbody>
         </Table>
       </div>
@@ -104,7 +88,6 @@ const AccountHome = (props) => {
 const mapStateToProps = (state) => {
   const { customer } = state;
   return {
-    //accounts: customer.accounts,
     checkings: customer.checkings,
     savings: customer.savings,
   };

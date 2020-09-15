@@ -18,6 +18,7 @@ const UserProfile = (props) => {
       </div>
     );
   };
+
   const renderProfileImage = () => {
     return (
       <div className="profileImage">
@@ -27,7 +28,6 @@ const UserProfile = (props) => {
   };
 
   const renderProfileDetails = () => {
-    // console.log(props);
     const { userLoaded } = props;
     if (userLoaded) {
       const { profile } = props;
@@ -45,27 +45,17 @@ const UserProfile = (props) => {
     }
   };
 
-  // uncommenting for now
-  // const renderEditProfile = () => {
-  //   return (
-  //     <div>
-  //       <Button variant="primary">Edit </Button>
-  //     </div>
-  //   );
-  // };
   return (
     <div>
       {renderMessages()}
       <div className="form-wrapper">
         {renderProfileImage()}
         {renderProfileDetails()}
-        {/* {renderEditProfile()} */}
       </div>
     </div>
   );
 };
 
-// export default UserProfile;
 const mapStateToProps = (state) => {
   const { customer } = state;
   return {

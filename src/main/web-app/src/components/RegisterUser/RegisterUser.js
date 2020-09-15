@@ -11,7 +11,6 @@ import {
   NAME,
   EMAIL,
   ADDRESS,
-  SUBMIT,
   ENTER_EMAIL,
   PHONE_NUMBER,
   PASSWORD,
@@ -22,13 +21,14 @@ import {
  * Form for user to sign up as a customer
  */
 const RegisterUser = (props) => {
+  // To do: post/send data over rest api to backend
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(props);
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
     props.history.push("/home");
   };
+
   const renderForm = () => {
     return (
       <Form onSubmit={handleSubmit}>
@@ -95,7 +95,6 @@ const RegisterUser = (props) => {
   );
 };
 
-// export default RegisterUser;
 const mapStateToProps = (state) => {
   const { auth } = state;
   return { loggedIn: auth.loggedIn };

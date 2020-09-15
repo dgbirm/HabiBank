@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Login.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
@@ -21,14 +21,10 @@ import {
   fetchSavingsTransactions,
 } from "../../redux/actions/customer";
 
-// putting fetch actions here for now
-// const Login = ({ fetchCustomers, fetchAccounts, fetchCheckingTransactions }) => {
 const Login = (props) => {
-  const [dataLoaded, setDataLoaded] = useState(false);
-
+  // TO DO: improve loadtime in fetching data before directing to /home
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(props);
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
     props.fetchCustomerProfile();
@@ -36,25 +32,10 @@ const Login = (props) => {
     props.fetchSavings();
     props.fetchCheckingTransactions();
     props.fetchSavingsTransactions();
-    // console.log(dataLoaded);
-    // setDataLoaded(!dataLoaded);
-    // console.log(dataLoaded);
-    // redirectPage();
-
-    // setTimeout(() => {
-    //   props.history.push("/home");
-    // }, 1000);
-
     props.history.push("/home");
   };
 
-  const redirectPage = () => {
-    console.log(dataLoaded);
-    if (dataLoaded) {
-      props.history.push("/home");
-    }
-  };
-
+  // unused code, keeping here as reference
   // async function loadAll() {
   //   await props.fetchCustomerProfile()
   //   await props.fetchCheckings()
@@ -107,7 +88,6 @@ const Login = (props) => {
   );
 };
 
-// export default Login;
 const mapStateToProps = (state) => {
   const { auth } = state;
   return { loggedIn: auth.loggedIn };

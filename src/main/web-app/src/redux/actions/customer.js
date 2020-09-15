@@ -1,7 +1,6 @@
 import {
   LOAD_CUSTOMER_PROFILE,
   CLEAR_CUSTOMER,
-  LOAD_CUSTOMER_ACCOUNTS,
   LOAD_CHECKINGS,
   LOAD_SAVINGS,
   SET_ACCOUNTS_LOADED,
@@ -35,6 +34,7 @@ export const clearCustomer = () => {
   };
 };
 
+// TO DO: find a more efficient method to get checkings & savings balance in less requests
 export const fetchCheckings = () => {
   return (dispatch) => {
     axios
@@ -80,6 +80,7 @@ export const setAccountsLoaded = (status) => {
   };
 };
 
+// TO DO: find a more efficient way to get checkings + savings transactions in less requests
 export const fetchCheckingTransactions = () => {
   return (dispatch) => {
     axios
