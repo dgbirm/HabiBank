@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
@@ -17,11 +17,15 @@ import {
   fetchCustomerProfile,
   fetchCheckings,
   fetchSavings,
+  fetchCheckingTransactions,
+  fetchSavingsTransactions,
 } from "../../redux/actions/customer";
 
 // putting fetch actions here for now
-// const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
+// const Login = ({ fetchCustomers, fetchAccounts, fetchCheckingTransactions }) => {
 const Login = (props) => {
+  const [dataLoaded, setDataLoaded] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(props);
@@ -30,7 +34,25 @@ const Login = (props) => {
     props.fetchCustomerProfile();
     props.fetchCheckings();
     props.fetchSavings();
+    props.fetchCheckingTransactions();
+    props.fetchSavingsTransactions();
+    // console.log(dataLoaded);
+    // setDataLoaded(!dataLoaded);
+    // console.log(dataLoaded);
+    // redirectPage();
+
+    // setTimeout(() => {
+    //   props.history.push("/home");
+    // }, 1000);
+
     props.history.push("/home");
+  };
+
+  const redirectPage = () => {
+    console.log(dataLoaded);
+    if (dataLoaded) {
+      props.history.push("/home");
+    }
   };
 
   // async function loadAll() {
@@ -96,5 +118,7 @@ const mapDispatchToProps = {
   fetchCustomerProfile,
   fetchCheckings,
   fetchSavings,
+  fetchCheckingTransactions,
+  fetchSavingsTransactions,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

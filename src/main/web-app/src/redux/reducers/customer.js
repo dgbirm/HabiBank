@@ -4,6 +4,8 @@ import {
   LOAD_CHECKINGS,
   LOAD_SAVINGS,
   SET_ACCOUNTS_LOADED,
+  LOAD_CHECKINGS_TRANSACTIONS,
+  LOAD_SAVINGS_TRANSACTIONS,
 } from "../actions/actionTypes";
 /**
  * reducer managing a customer
@@ -28,6 +30,8 @@ const initialState = {
     acctBalance: 0,
     acctType: "",
   },
+  checkingsTransactions: [],
+  savingsTransactions: [],
   userLoaded: false,
   accountsLoaded: false,
 };
@@ -52,6 +56,18 @@ function customerReducer(state = initialState, action) {
         ...state,
         savings: action.payload,
       });
+
+    case LOAD_CHECKINGS_TRANSACTIONS:
+      return {
+        ...state,
+        checkingsTransactions: action.payload,
+      };
+
+    case LOAD_SAVINGS_TRANSACTIONS:
+      return {
+        ...state,
+        savingsTransactions: action.payload,
+      };
 
     case SET_ACCOUNTS_LOADED:
       return {

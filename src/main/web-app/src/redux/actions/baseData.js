@@ -53,12 +53,12 @@ export const loadAccounts = (data) => {
   };
 };
 
-export const fetchTransactions = () => {
+export const fetchCheckingTransactions = () => {
   return (dispatch) => {
     return axios
       .get(TRANS_REST_API_URL)
       .then((res) => {
-        dispatch(loadTransactions(res.data));
+        dispatch(loadCheckingTransactions(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +66,7 @@ export const fetchTransactions = () => {
   };
 };
 
-export const loadTransactions = (data) => {
+export const loadCheckingTransactions = (data) => {
   return {
     type: LOAD_ALL_TRANSACTIONS,
     payload: data.content,

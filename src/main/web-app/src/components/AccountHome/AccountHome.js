@@ -42,7 +42,7 @@ const AccountHome = (props) => {
   };
 
   const renderBalanceView = () => {
-    console.log(props);
+    // console.log(props);
     return (
       <div className="form-wrapper customStyle">
         <Table striped borderless hover>

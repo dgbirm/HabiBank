@@ -6,7 +6,7 @@ import Header from "../Header/Header";
 import {
   fetchCustomers,
   fetchAccounts,
-  fetchTransactions,
+  fetchCheckingTransactions,
 } from "../../redux/actions/baseData";
 import {
   fetchCustomerProfile,
@@ -19,7 +19,7 @@ const App = (props) => {
     //    await props.fetchCheckings();
     // await props.fetchCustomers();
     // await props.fetchAccounts();
-    // await props.fetchTransactions();
+    // await props.fetchCheckingTransactions();
     // await props.fetchCustomerProfile();
   }
   useEffect(() => {
@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchCustomers,
   fetchAccounts,
-  fetchTransactions,
+  fetchCheckingTransactions,
   fetchCustomerProfile,
   fetchCheckings,
 };

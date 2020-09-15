@@ -28,6 +28,11 @@ export const SAVINGS_MESSAGE =
 export const DEPOSIT = "Deposit";
 export const WITHDRAW = "Withdraw";
 export const TRANSFER = "Transfer";
+export const TRANSACTION_ID = "Transaction #";
+export const TRANSACTION_MEMO = "Memo";
+export const TRANSACTION_AMOUNT_TRANSFERED = "Amount Transfered";
+export const TRANSACTION_MESSAGE =
+  "Fill in the fields below to facilitate your transaction";
 
 // Form Labels
 export const USERNAME = "Username";
@@ -36,6 +41,9 @@ export const EMAIL = "Email Address";
 export const NAME = "Name";
 export const ADDRESS = "Address";
 export const PHONE_NUMBER = "Phone Number";
+export const AMOUNT = "Amount";
+export const TO_ACCOUNT = "To account";
+export const FROM_ACCOUNT = "From account";
 
 // Form Interaction
 export const ENTER_EMAIL = "Enter email";

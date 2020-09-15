@@ -3,18 +3,44 @@ import "./Transaction.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import {
+  DEPOSIT,
+  WITHDRAW,
+  TRANSFER,
+  TRANSACTION_MESSAGE,
+  SAVINGS,
+  CHECKINGS,
+  AMOUNT,
+  TO_ACCOUNT,
+  FROM_ACCOUNT,
+} from "../../constants/index";
 /**
  * Transaction page. Options for user to withdraw, deposit, transfer
- * TO DO: pull from redux store
  */
 const Transaction = (props) => {
+  const renderMessages = () => {
+    let title = "";
+    if (props.Type === DEPOSIT) title = DEPOSIT;
+    if (props.Type === WITHDRAW) title = WITHDRAW;
+    if (props.Type === TRANSFER) title = TRANSFER;
+
+    return (
+      <div className="messages">
+        <h2>{title}</h2>
+        <h6>
+          <i>{TRANSACTION_MESSAGE}</i>
+        </h6>
+      </div>
+    );
+  };
+
   const renderSrcSelect = () => {
     return (
       <Form.Group controlId="exampleForm.ControlSelect1">
-        <Form.Label>From account</Form.Label>
+        <Form.Label>{FROM_ACCOUNT}</Form.Label>
         <Form.Control as="select">
-          <option>Savings</option>
-          <option>Checkings</option>
+          <option>{SAVINGS}</option>
+          <option>{CHECKINGS}</option>
         </Form.Control>
       </Form.Group>
     );
@@ -23,10 +49,10 @@ const Transaction = (props) => {
   const renderTgtSelect = () => {
     return (
       <Form.Group controlId="exampleForm.ControlSelect2">
-        <Form.Label>To account</Form.Label>
+        <Form.Label>{TO_ACCOUNT}</Form.Label>
         <Form.Control as="select">
-          <option>Savings</option>
-          <option>Checkings</option>
+          <option>{SAVINGS}</option>
+          <option>{CHECKINGS}</option>
         </Form.Control>
       </Form.Group>
     );
@@ -35,8 +61,8 @@ const Transaction = (props) => {
   const renderAmount = () => {
     return (
       <Form.Group controlId="exampleForm.ControlInput1">
-        <Form.Label>Amount</Form.Label>
-        <Form.Control type="text" placeholder="$" />
+        <Form.Label>{AMOUNT}</Form.Label>
+        <Form.Control type="number" placeholder="$" />
       </Form.Group>
     );
   };
@@ -63,9 +89,11 @@ const Transaction = (props) => {
     );
   };
   return (
-    <div className="form-wrapper customStyle">
-      Transaction {props.Type}
-      <div className="form-container">{renderForm()}</div>
+    <div>
+      {renderMessages()}
+      <div className="form-wrapper customStyle">
+        <div className="form-container">{renderForm()}</div>
+      </div>
     </div>
   );
 };

@@ -5,6 +5,8 @@ import {
   LOAD_CHECKINGS,
   LOAD_SAVINGS,
   SET_ACCOUNTS_LOADED,
+  LOAD_CHECKINGS_TRANSACTIONS,
+  LOAD_SAVINGS_TRANSACTIONS,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -75,5 +77,57 @@ export const setAccountsLoaded = (status) => {
   return {
     type: SET_ACCOUNTS_LOADED,
     payload: status,
+  };
+};
+
+export const fetchCheckingTransactions = () => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:8080/api/transactions?page=0`)
+      .then((res) => {
+        dispatch(loadCheckingTransactions(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const loadCheckingTransactions = (data) => {
+  let allData = [];
+  for (let i in data.content) {
+    if (data.content[i].acct.acctType === "CHECKING") {
+      let { amountTransfered, memo, transactionID } = data.content[i];
+      let obj = { amountTransfered, memo, transactionID };
+      allData.push(obj);
+    }
+  }
+  return {
+    type: LOAD_CHECKINGS_TRANSACTIONS,
+    payload: allData,
+  };
+};
+
+export const fetchSavingsTransactions = () => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:8080/api/transactions?page=0`)
+      .then((res) => {
+        dispatch(loadSavingsTransactions(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const loadSavingsTransactions = (data) => {
+  let allData = [];
+  for (let i in data.content) {
+    if (data.content[i].acct.acctType === "SAVINGS") {
+      let { amountTransfered, memo, transactionID } = data.content[i];
+      let obj = { amountTransfered, memo, transactionID };
+      allData.push(obj);
+    }
+  }
+  return {
+    type: LOAD_SAVINGS_TRANSACTIONS,
+    payload: allData,
   };
 };
