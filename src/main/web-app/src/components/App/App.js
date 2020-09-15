@@ -16,7 +16,7 @@ import {
 const App = (props) => {
   // temporary feature - loads all db data into redux store
   async function loadAll() {
-    await props.fetchCheckings();
+    //    await props.fetchCheckings();
     // await props.fetchCustomers();
     // await props.fetchAccounts();
     // await props.fetchTransactions();

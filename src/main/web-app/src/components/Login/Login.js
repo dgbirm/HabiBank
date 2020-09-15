@@ -13,7 +13,10 @@ import {
   SUBMIT,
   CREATE_ACCOUNT_TODAY,
 } from "../../constants/index";
-import { fetchCustomerProfile } from "../../redux/actions/customer";
+import {
+  fetchCustomerProfile,
+  fetchCheckings,
+} from "../../redux/actions/customer";
 
 // putting fetch actions here for now
 // const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
@@ -25,6 +28,7 @@ const Login = (props) => {
     props.updateLogInStatus(!loggedIn);
     props.history.push("/home");
     props.fetchCustomerProfile();
+    props.fetchCheckings();
   };
 
   const renderForm = () => {
@@ -75,5 +79,9 @@ const mapStateToProps = (state) => {
   return { loggedIn: auth.loggedIn };
 };
 
-const mapDispatchToProps = { updateLogInStatus, fetchCustomerProfile };
+const mapDispatchToProps = {
+  updateLogInStatus,
+  fetchCustomerProfile,
+  fetchCheckings,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
