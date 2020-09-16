@@ -12,6 +12,11 @@ import {
   CHECKINGS,
   BALANCE,
 } from "../../constants/index";
+import {
+  fetchCustomerProfile,
+  fetchCheckings,
+  fetchSavings,
+} from "../../redux/actions/customer";
 /**
  * Home page when a user successfully logs in
  * Multiple user routes can be taken here (reference user flow diagram)
@@ -40,16 +45,19 @@ const AccountHome = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.accounts.map((each, index) => {
-              return (
-                <tr key={index}>
-                  <td>{each.accountID}</td>
-                  <td>{each.accountType.toUpperCase()}</td>
-                  <td>${each.accountBalance.toFixed(2)}</td>
-                  <td>{renderButton(each.accountType.toUpperCase())}</td>
-                </tr>
-              );
-            })}
+            <tr>
+              <td>{props.savings.acctID}</td>
+              <td>{props.savings.acctType.toUpperCase()}</td>
+              <td>${props.savings.acctBalance.toFixed(2)}</td>
+              <td>{renderButton(props.savings.acctType.toUpperCase())}</td>
+            </tr>
+
+            <tr>
+              <td>{props.checkings.acctID}</td>
+              <td>{props.checkings.acctType.toUpperCase()}</td>
+              <td>${props.checkings.acctBalance.toFixed(2)}</td>
+              <td>{renderButton(props.checkings.acctType.toUpperCase())}</td>
+            </tr>
           </tbody>
         </Table>
       </div>
@@ -80,9 +88,29 @@ const AccountHome = (props) => {
 const mapStateToProps = (state) => {
   const { customer } = state;
   return {
-    accounts: customer.accounts,
+    checkings: customer.checkings,
+    savings: customer.savings,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  fetchCustomerProfile,
+  fetchCheckings,
+  fetchSavings,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(AccountHome);
+
+// future code for an array accounts containing multiple account objects
+// ex. accounts = [ {savings}, {checkings}, ...]
+/*
+{ {props.accounts.map((each, index) => {
+              return (
+                <tr key={index}>
+                  <td>{each.accountID}</td>
+                  <td>{each.accountType.toUpperCase()}</td>
+                  <td>${each.accountBalance.toFixed(2)}</td>
+                  <td>{renderButton(each.accountType.toUpperCase())}</td>
+                </tr>
+              );
+            })} }
+*/

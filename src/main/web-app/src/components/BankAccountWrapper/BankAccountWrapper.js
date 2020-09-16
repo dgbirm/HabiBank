@@ -7,7 +7,6 @@ import {
   MY_CHECKINGS,
   CHECKINGS_MESSAGE,
   BANK_ACCOUNT_ID,
-  ACCOUNT_TYPE,
   BALANCE,
   CHECKINGS,
   DEPOSIT,
@@ -15,61 +14,86 @@ import {
   TRANSFER,
   MY_SAVINGS,
   SAVINGS_MESSAGE,
+  TRANSACTION_ID,
+  TRANSACTION_MEMO,
+  TRANSACTION_AMOUNT_TRANSFERED,
 } from "../../constants/index";
 /**
  * Displays savings or checkings account info here (balance, transaction history)
  */
 const BankAccountWrapper = (props) => {
-  const getID = (type) => {
-    for (let i = 0; i < props.accounts.length; i++) {
-      let obj = props.accounts[i];
-      if (obj.accountType.toUpperCase() === type) {
-        return obj.accountID;
-      }
-    }
-  };
-
   const renderMessages = () => {
-    let id = props.Type === CHECKINGS ? getID("CHECKINGS") : getID("SAVINGS");
+    const { checkings, savings } = props;
+    let id = props.Type === CHECKINGS ? checkings.acctID : savings.acctID;
     let title = props.Type === CHECKINGS ? MY_CHECKINGS : MY_SAVINGS;
     let message =
       props.Type === CHECKINGS ? CHECKINGS_MESSAGE : SAVINGS_MESSAGE;
+    let balance =
+      props.Type === CHECKINGS ? checkings.acctBalance : savings.acctBalance;
+
     return (
       <div className="messages">
         <h2>{title}</h2>
         <p>
-          {BANK_ACCOUNT_ID} {id}{" "}
+          {BANK_ACCOUNT_ID}
+          {id}{" "}
         </p>
         <h6>
           <i>{message}</i>
+        </h6>
+        <h6>
+          {BALANCE}: ${balance}
         </h6>
       </div>
     );
   };
 
-  // TODO: show transactions
+  const renderRows = () => {
+    if (props.Type === CHECKINGS) {
+      return (
+        <>
+          {props.checkingsTransactions.map((each, index) => {
+            console.log(each);
+            return (
+              <tr key={index}>
+                <td>{each.transactionID}</td>
+                <td>{each.memo}</td>
+                <td>${each.amountTransfered.toFixed(2)}</td>
+              </tr>
+            );
+          })}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {props.savingsTransactions.map((each, index) => {
+            console.log(each);
+            return (
+              <tr key={index}>
+                <td>{each.transactionID}</td>
+                <td>{each.memo}</td>
+                <td>${each.amountTransfered.toFixed(2)}</td>
+              </tr>
+            );
+          })}
+        </>
+      );
+    }
+  };
+
   const renderBalanceView = () => {
     return (
       <div className="form-wrapper customStyle">
         <Table striped borderless hover>
           <thead>
             <tr>
-              <th>{BANK_ACCOUNT_ID}</th>
-              <th>{ACCOUNT_TYPE}</th>
-              <th>{BALANCE}</th>
+              <th>{TRANSACTION_ID}</th>
+              <th>{TRANSACTION_MEMO}</th>
+              <th>{TRANSACTION_AMOUNT_TRANSFERED}</th>
             </tr>
           </thead>
-          <tbody>
-            {props.accounts.map((each, index) => {
-              return (
-                <tr key={index}>
-                  <td>{each.accountID}</td>
-                  <td>{each.accountType.toUpperCase()}</td>
-                  <td>${each.accountBalance.toFixed(2)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
+          <tbody>{renderRows()}</tbody>
         </Table>
       </div>
     );
@@ -110,7 +134,10 @@ const BankAccountWrapper = (props) => {
 const mapStateToProps = (state) => {
   const { customer } = state;
   return {
-    accounts: customer.accounts,
+    savings: customer.savings,
+    checkings: customer.checkings,
+    checkingsTransactions: customer.checkingsTransactions,
+    savingsTransactions: customer.savingsTransactions,
   };
 };
 

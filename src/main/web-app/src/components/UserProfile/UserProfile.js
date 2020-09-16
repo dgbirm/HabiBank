@@ -2,12 +2,23 @@ import React from "react";
 import "./UserProfile.css";
 import { connect } from "react-redux";
 import userIcon from "../../assets/userIcon.png";
-// import { Button } from "react-bootstrap";
+import { USER_PROFILE, PROFILE_MESSAGE } from "../../constants/index";
 
 /**
  * Displays user information
  */
 const UserProfile = (props) => {
+  const renderMessages = () => {
+    return (
+      <div className="messages">
+        <h2>{USER_PROFILE}</h2>
+        <h6>
+          <i>{PROFILE_MESSAGE}</i>
+        </h6>
+      </div>
+    );
+  };
+
   const renderProfileImage = () => {
     return (
       <div className="profileImage">
@@ -17,7 +28,6 @@ const UserProfile = (props) => {
   };
 
   const renderProfileDetails = () => {
-    // console.log(props);
     const { userLoaded } = props;
     if (userLoaded) {
       const { profile } = props;
@@ -35,24 +45,17 @@ const UserProfile = (props) => {
     }
   };
 
-  // uncommenting for now
-  // const renderEditProfile = () => {
-  //   return (
-  //     <div>
-  //       <Button variant="primary">Edit </Button>
-  //     </div>
-  //   );
-  // };
   return (
-    <div className="form-wrapper">
-      {renderProfileImage()}
-      {renderProfileDetails()}
-      {/* {renderEditProfile()} */}
+    <div>
+      {renderMessages()}
+      <div className="form-wrapper">
+        {renderProfileImage()}
+        {renderProfileDetails()}
+      </div>
     </div>
   );
 };
 
-// export default UserProfile;
 const mapStateToProps = (state) => {
   const { customer } = state;
   return {

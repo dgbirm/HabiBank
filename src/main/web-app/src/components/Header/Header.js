@@ -6,14 +6,20 @@ import { updateLogInStatus } from "../../redux/actions/auth";
 import { clearCustomer } from "../../redux/actions/customer";
 import { withRouter, Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { BANK_NAME, HEADER_GREETING, GUEST } from "../../constants/index";
+import {
+  HEADER_GREETING,
+  GUEST,
+  NAV_HOME,
+  NAV_PROFILE,
+  NAV_LOG_IN,
+  NAV_LOG_OUT,
+} from "../../constants/index";
 /**
  * Universal header when the user is logged in
  */
 const Header = (props) => {
   const renderName = () => {
-    const { userLoaded, loggedIn, fullName, profile } = props;
-    // userloaded check
+    const { loggedIn, profile } = props;
     let name = loggedIn ? profile.fullName : GUEST;
 
     return (
@@ -66,13 +72,13 @@ const Header = (props) => {
       return (
         <Nav>
           <Nav.Link href="" onClick={handleHome}>
-            Home
+            {NAV_HOME}
           </Nav.Link>
           <Nav.Link href="" onClick={handleProfile}>
-            Profile
+            {NAV_PROFILE}
           </Nav.Link>
           <Nav.Link href="" onClick={handleLogOut}>
-            Log out
+            {NAV_LOG_OUT}
           </Nav.Link>
         </Nav>
       );
@@ -80,7 +86,7 @@ const Header = (props) => {
       return (
         <Nav>
           <Nav.Link href="" onClick={handleLogIn}>
-            Log in
+            {NAV_LOG_IN}
           </Nav.Link>
         </Nav>
       );
@@ -104,7 +110,6 @@ const mapStateToProps = (state) => {
   const { customer, auth } = state;
   return {
     profile: customer.profile,
-    fullName: customer.fullName,
     userLoaded: customer.userLoaded,
     loggedIn: auth.loggedIn,
   };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import "./customizedStyles.css";
 import { connect } from "react-redux";
@@ -6,7 +6,7 @@ import Header from "../Header/Header";
 import {
   fetchCustomers,
   fetchAccounts,
-  fetchTransactions,
+  fetchCheckingTransactions,
 } from "../../redux/actions/baseData";
 import {
   fetchCustomerProfile,
@@ -14,18 +14,7 @@ import {
 } from "../../redux/actions/customer";
 
 const App = (props) => {
-  // temporary feature - loads all db data into redux store
-  async function loadAll() {
-    //    await props.fetchCheckings();
-    // await props.fetchCustomers();
-    // await props.fetchAccounts();
-    // await props.fetchTransactions();
-    // await props.fetchCustomerProfile();
-  }
-  useEffect(() => {
-    loadAll();
-  });
-
+  // TO DO: maybe have a userloaded state. if false => spinner?
   return (
     <div className="App">
       <div className="header-container">
@@ -43,7 +32,6 @@ const App = (props) => {
   );
 };
 
-//export default App;
 const mapStateToProps = (state) => {
   return {};
 };
@@ -51,7 +39,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchCustomers,
   fetchAccounts,
-  fetchTransactions,
+  fetchCheckingTransactions,
   fetchCustomerProfile,
   fetchCheckings,
 };

@@ -6,8 +6,11 @@ import {
 
 import axios from "axios";
 
-const ROOT = "/api";
-const HOST_NAME = "http://localhost:8080";
+/**
+ * Base file to get all data
+ */
+//const ROOT = "/api";
+//const HOST_NAME = "http://localhost:8080";
 
 //for testing
 const CUST_REST_API_URL = "http://localhost:8080/api/customers";
@@ -15,9 +18,6 @@ const ACCT_REST_API_URL = "http://localhost:8080/api/accounts";
 const TRANS_REST_API_URL = "http://localhost:8080/api/transactions";
 
 export const fetchCustomers = () => {
-  // fetch(CUST_REST_API_URL, { mode: "no-cors" }).then((res) =>
-  //   console.log(res.data)
-  // );
   return (dispatch) => {
     return axios
       .get(CUST_REST_API_URL)
@@ -53,12 +53,12 @@ export const loadAccounts = (data) => {
   };
 };
 
-export const fetchTransactions = () => {
+export const fetchCheckingTransactions = () => {
   return (dispatch) => {
     return axios
       .get(TRANS_REST_API_URL)
       .then((res) => {
-        dispatch(loadTransactions(res.data));
+        dispatch(loadCheckingTransactions(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +66,7 @@ export const fetchTransactions = () => {
   };
 };
 
-export const loadTransactions = (data) => {
+export const loadCheckingTransactions = (data) => {
   return {
     type: LOAD_ALL_TRANSACTIONS,
     payload: data.content,

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Login.css";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
@@ -16,20 +16,35 @@ import {
 import {
   fetchCustomerProfile,
   fetchCheckings,
+  fetchSavings,
+  fetchCheckingTransactions,
+  fetchSavingsTransactions,
 } from "../../redux/actions/customer";
 
-// putting fetch actions here for now
-// const Login = ({ fetchCustomers, fetchAccounts, fetchTransactions }) => {
 const Login = (props) => {
+  // TO DO: improve loadtime in fetching data before directing to /home
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(props);
     const { loggedIn } = props;
     props.updateLogInStatus(!loggedIn);
-    props.history.push("/home");
     props.fetchCustomerProfile();
     props.fetchCheckings();
+    props.fetchSavings();
+    props.fetchCheckingTransactions();
+    props.fetchSavingsTransactions();
+    props.history.push("/home");
   };
+
+  // unused code, keeping here as reference
+  // async function loadAll() {
+  //   await props.fetchCustomerProfile()
+  //   await props.fetchCheckings()
+  //   await props.fetchSavings()
+
+  // }
+  // useEffect(() => {
+  //   loadAll();
+  // });
 
   const renderForm = () => {
     return (
@@ -73,7 +88,6 @@ const Login = (props) => {
   );
 };
 
-// export default Login;
 const mapStateToProps = (state) => {
   const { auth } = state;
   return { loggedIn: auth.loggedIn };
@@ -83,5 +97,8 @@ const mapDispatchToProps = {
   updateLogInStatus,
   fetchCustomerProfile,
   fetchCheckings,
+  fetchSavings,
+  fetchCheckingTransactions,
+  fetchSavingsTransactions,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
