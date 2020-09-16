@@ -1,6 +1,7 @@
 package com.habibank.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,15 +69,26 @@ public class HabibankController {
 		return this.custRepo.findByUserNameAndPassword(userName,password);
 	}
 
-	//look into @requestbody
-	//get accounts by customer
-	@GetMapping("customer/accounts/{custID}")
-	public List<Account> getCustomerAccounts(@PathVariable("custID") List<Account> custID) {
+	//get accounts and transactions by customer
+	@GetMapping("customer/{custID}/accounts") //Needs fine tuning
+	public List<Object[]> getCustomerAccounts(@PathVariable("custID") Long custID) {
 		return this.custRepo.getCustomerAccounts(custID);
 	}
+	@GetMapping("customer/{custID}/transactions")
+		 public List<Object[]> getCustomerTransactions(@PathVariable("custID") Long custID) {
+		 	return this.custRepo.getCustomerTransactions(custID) ;
+		 }
 
 
-	@PostMapping("/register/{userName}/{fullName}/{email}/{password}")
+
+
+
+
+
+
+
+
+	@PostMapping("/register/{userName}/{password}")
 	public Customer registerCustomer(@RequestBody Customer c){
 		if(custRepo.equals(c.getUserName()) && custRepo.equals(c.getEmail())){
 			return null;
@@ -89,20 +101,7 @@ public class HabibankController {
 	}
 
 
-		// //get accounts by customer
-		// @GetMapping("customer/{custID}/transactions")
-		// public List<Account> getCustomerTransactions(@PathVariable("custID") List<Account> custID) {
-		// 	return this.custRepo.getCustomerAccounts(custID);
-		// }
-
 	
-	//register page
-		
-	//getaccounts by customer username
-	//@GetMapping
-	
-
-
 
 	//get mapping to show transactions by customerId
 
